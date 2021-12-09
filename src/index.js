@@ -6,11 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import store from './redux/redux-store';
 
 
-export let rerenderEntireTree = (state = store.getState(), dispatch = store.dispatch.bind(store)) => {
-  console.log();
+export let rerenderEntireTree = (reduxStore = store, state=store.getState(), dispatch = store.dispatch.bind(store)) => {
     ReactDOM.render(
       <React.StrictMode>
-        <App state={state} dispatch={dispatch}/>
+        <App state={state} store={reduxStore} dispatch={dispatch}/>
       </React.StrictMode>,
       document.getElementById('root')
     );

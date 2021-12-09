@@ -1,9 +1,7 @@
 import React from 'react';
 import Message from './Message/Message';
 import classes from './Dialogs.module.css';
-import { NavLink } from 'react-router-dom';
 import DialogItem from './DialogItem/DialogItem';
-import { sendMessageCreator, updateMessengerInputCreator } from '../../redux/dialogsReducer';
 
 
 const Dialogs = (props) => {
@@ -19,12 +17,13 @@ const Dialogs = (props) => {
     let messages = messagesData
     .map(el => (<Message text={el.message} id={el.id} />));
 
-    const updateMessengerInput = (e) => {
-        props.dispatch(updateMessengerInputCreator(e.target.value));
+    const onInputFieldChange = (e) => {
+        let text = e.target.value;
+        props.updateMessengerInput(text);
     };
 
-    const sendMessage = () => {
-        props.dispatch(sendMessageCreator());
+    const onSendMessage = () => {
+        props.sendMessage();
     };
 
     return(
@@ -39,8 +38,8 @@ const Dialogs = (props) => {
                 <div className={classes.messageInput}>
                     <textarea placeholder='Input your message'
                             value={props.messengerData.messengerInputField}
-                            onChange={ updateMessengerInput }></textarea>
-                    <button onClick={ sendMessage }>Send</button>
+                            onChange={ onInputFieldChange }></textarea>
+                    <button onClick={ onSendMessage }>Send</button>
                 </div>
             </div>
         </div>
