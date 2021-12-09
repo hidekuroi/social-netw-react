@@ -1,0 +1,49 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+    color: white;
+    min-height: 80vh;
+    grid-template-areas: 
+  "ditems msngr";
+
+  /* grid-template-rows: 20vh 20vh auto; */
+  grid-template-rows: auto;
+  grid-auto-columns: 2fr 10fr ;
+  grid-gap: 5px;
+}
+
+.dialogItems{
+    grid-area: ditems;
+    padding: 10px;
+    border-right: 3px solid;
+    border-color: white;
+    background-color: rgb(137, 255, 255);
+}
+
+
+.dialogItems .active{
+    color: purple;
+    background-color: cyan;
+    padding-left: 10px;
+}
+
+.messenger{
+    display: grid;
+    grid-template-areas: 
+    "msgs"
+    "inp";
+    min-height: 88vh;
+    padding: 10px;
+    grid-template-rows: 1fr auto;
+}
+
+.messages{
+    grid-area: msgs;
+}
+
+.messageInput{
+    grid-area: inp;
+    margin-left: auto;
+    margin-right: auto;
+}
+

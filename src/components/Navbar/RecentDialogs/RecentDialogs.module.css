@@ -1,0 +1,22 @@
+.recentDialogs{
+    background-color: lightblue;
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+.header{
+    color: purple;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+a:hover{
+    transition: 0.2s;
+    color: purple;
+    background-color: rgb(113, 255, 255);
+}

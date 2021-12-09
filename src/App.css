@@ -1,0 +1,40 @@
+body{
+  min-height: 100vh;
+}
+.app-wrapper{
+  display: grid;
+  width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+  grid-template-areas: 
+  "h h"
+  "n c"
+  "n f";
+
+  grid-template-rows: 50px 1fr auto;
+  grid-auto-columns: 2fr 10fr ;
+  grid-gap: 5px;
+}
+
+.app-wrapper > .header{
+  grid-area: h;
+}
+
+.app-wrapper > .navbar{
+  grid-area: n;
+}
+
+.app-wrapper > .app-wrapper-content{
+  grid-area: c;
+  background-color: lightblue;
+}
+
+.footer{
+  background-color: red;
+}
+
+.app-wrapper > .footer{
+  grid-area: f;
+  background-color: cyan;
+  color: white;
+}

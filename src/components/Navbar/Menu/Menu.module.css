@@ -1,0 +1,24 @@
+nav{
+    grid-area: n;
+    background-color: cyan;
+    padding: 15px;
+  }
+
+a{
+  text-decoration: none;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.dick{
+  background-color: rgb(137, 255, 255);
+}
+
+.item a{
+    color: white;
+}
+
+.item a.activeLink{
+  color: purple;
+  background-color: rgb(137, 255, 255);
+}
