@@ -5,10 +5,9 @@ import RecDialogItem from './RecDialogItem/RecDialogItem';
 
 const RecentDialogs = (props) =>{
     
-    let dialogsData = props.dialogsData.dialogsData;
+    let dialogs = props.recentDialogs;
 
-
-    let recentDialogItems = dialogsData
+    let recentDialogItems = dialogs
     .map(el => (<RecDialogItem id={el.id} name={el.name}/>));
 
     return(
