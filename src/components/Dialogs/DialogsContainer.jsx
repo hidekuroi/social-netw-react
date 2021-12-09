@@ -1,25 +1,30 @@
 import React from 'react';
 import { sendMessageCreator, updateMessengerInputCreator } from '../../redux/dialogsReducer';
+import StoreContext from '../../StoreContext';
 import Dialogs from './Dialogs';
 
 
 const DialogsContainer = (props) => {
 
-    let messengerData = props.store.getState().messenger;
+    return <StoreContext.Consumer>
+    { store => {
+        let messengerData = store.getState().messenger;
 
-    const updateMessengerInput = (text) => {
-        props.store.dispatch(updateMessengerInputCreator(text));
-    };
+        const updateMessengerInput = (text) => {
+            store.dispatch(updateMessengerInputCreator(text));
+        };
+    
+        const sendMessage = () => {
+            store.dispatch(sendMessageCreator());
+        };
 
-    const sendMessage = () => {
-        props.store.dispatch(sendMessageCreator());
-    };
-
-    return(
-        <Dialogs messengerData={ messengerData }
+        return <Dialogs messengerData={ messengerData }
                  updateMessengerInput={ updateMessengerInput }
                  sendMessage={ sendMessage }/>
-    );
+       
+        }
+    }
+    </StoreContext.Consumer>
 }
 
 export default DialogsContainer;
