@@ -6,13 +6,19 @@ import {Route} from 'react-router-dom';
 
 const Navbar = (props) => {
 
+  let recentDialogs = () => {
+    return(
+      <RecentDialogs recentDialogs={props.dialogsData} />
+    );
+  }
     return(
       <div>
         <Menu />
-        <Route path='/profile' render={ () => <RecentDialogs recentDialogs={props.dialogsData}/> } />
-        <Route path='/feed' render={ () => <RecentDialogs recentDialogs={props.dialogsData}/> } />
-        <Route path='/settings' render={ () => <RecentDialogs recentDialogs={props.dialogsData}/> } />
-        <Route path='/music' render={ () => <RecentDialogs recentDialogs={props.dialogsData}/> } />
+        <Route path='/profile' render={recentDialogs} />
+        <Route path='/feed' render={recentDialogs} />
+        <Route path='/settings' render={recentDialogs} />
+        <Route path='/users' render={recentDialogs} />
+        <Route path='/music' render={recentDialogs } />
       </div>
     );
     

@@ -9,7 +9,6 @@ let initialState = {
         newPostText:''
 };
 
-let initialState2 = initialState;
 
 const profileReducer = (state = initialState, action) => {
     
