@@ -8,7 +8,7 @@ const MyPosts = (props) => {
 
 
   let posts = postsData
-  .map(el => (<Post message={el.text} id={el.id} />));
+  .map(el => (<Post userPhoto={props.userPhoto} message={el.text} id={el.id} />));
 
   let newPostElement = React.createRef();
 

@@ -1,0 +1,26 @@
+.wallpaper{
+    width: 995.83px;
+    height: 200px;
+}
+
+.profilePicture img{
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.userName{
+    font-size: 1.7em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.aboutMe{
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.small{
+    width: 101px;
+    height: 101px;
+}

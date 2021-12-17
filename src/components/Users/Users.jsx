@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import classes from './Users.module.css';
 
 
@@ -54,7 +55,9 @@ const Users = (props) => {
             props.users.map(u => <div key={u.id}>
                 <div>
                     <div>
-                        <img src={u.photos.small ? u.photos.small : profilePic} className={classes.profilePicture}/>
+                        <NavLink to={`profile/${u.id}`} className={classes.profpic}>
+                            <img src={u.photos.small ? u.photos.small : profilePic} className={classes.profilePicture}/>
+                        </NavLink>
                     </div>
                     <div>
                         {

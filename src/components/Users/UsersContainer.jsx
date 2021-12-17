@@ -20,6 +20,7 @@ class UsersContainer extends React.Component {
 
   componentWillUnmount() {
     this.props.toggleLoading();
+    this.props.changeCurrentPage(1);
   }
 
   onPageChange = (p) => {
