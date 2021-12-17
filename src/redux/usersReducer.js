@@ -2,6 +2,7 @@ const TOGGLE_FOLLOW = 'TOGGLE-FOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_USERS_COUNT = 'SET-USERS-COUNT';
 const CHANGE_CURRENT_PAGE = 'CHANGE-CURRENT-PAGE';
+const TOGGLE_LOADING = 'TOGGLE-LOADING';
 
 let initialState = {
         users: [
@@ -12,7 +13,8 @@ let initialState = {
         ],
         totalUsersCount: 0,
         pageSize: 10,
-        currentPage: 1
+        currentPage: 1,
+        isLoading: true
 };
 
 
@@ -38,12 +40,12 @@ const usersReducer = (state = initialState, action) => {
         }
 
         case CHANGE_CURRENT_PAGE: {
-            console.log("red.page: " + action.page)
-            
             let stateCopy = {...state, currentPage: action.page}
-
-            console.log("stateCopy: " + stateCopy.currentPage);
             return stateCopy;
+        }
+
+        case TOGGLE_LOADING: {
+            return {...state, isLoading: !state.isLoading};
         }
 
         default: {
@@ -54,9 +56,10 @@ const usersReducer = (state = initialState, action) => {
 
 }
 
-export const toggleFollowAC = (userId) => ({type: TOGGLE_FOLLOW, userId: userId});
-export const setUsersAC = (users) => ({type: SET_USERS, users});
-export const setUsersCountAC = (count) => ({type: SET_USERS_COUNT, count});
-export const changeCurrentPageAC = (page) => ({type: CHANGE_CURRENT_PAGE, page});
+export const toggleFollow = (userId) => ({type: TOGGLE_FOLLOW, userId: userId});
+export const setUsers = (users) => ({type: SET_USERS, users});
+export const setUsersCount = (count) => ({type: SET_USERS_COUNT, count});
+export const changeCurrentPage = (page) => ({type: CHANGE_CURRENT_PAGE, page});
+export const toggleLoading = () => ({type: TOGGLE_LOADING})
 
 export default usersReducer;

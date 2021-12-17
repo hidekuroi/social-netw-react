@@ -1,11 +1,53 @@
 import React from 'react';
 import Users from "./Users";
-import { changeCurrentPageAC, setUsersAC, setUsersCountAC, toggleFollowAC} from '../../redux/usersReducer';
+import { changeCurrentPage, setUsers, setUsersCount, toggleFollow, toggleLoading} from '../../redux/usersReducer';
+import Loading from '../common/Loading';
 import { connect } from 'react-redux';
+import * as axios from 'axios';
 
 let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
 
+class UsersContainer extends React.Component {
+    
+  componentDidMount() {
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}`)
+      .then(response => {
+          this.props.setUsers(response.data.items);
+          this.props.setUsersCount(response.data.totalCount);
+          this.props.toggleLoading();
+      });
+  }
 
+  componentWillUnmount() {
+    this.props.toggleLoading();
+  }
+
+  onPageChange = (p) => {
+      this.props.changeCurrentPage(p);
+      this.props.toggleLoading();
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`)
+      .then(response => {
+          this.props.toggleLoading();
+          this.props.setUsers(response.data.items);
+      });
+  }
+
+  render() {
+    return <>
+            {this.props.isLoading ? <Loading /> : null}
+           <Users users={this.props.users}
+                  currentPage={this.props.currentPage}
+                  changeCurrentPage={this.props.changeCurrentPage}
+                  onPageChange={this.onPageChange}
+                  totalUsersCount={this.props.totalUsersCount}
+                  pageSize={this.props.pageSize}
+                  toggleFollow={this.props.toggleFollow}
+                  profilePic={profilePic}
+                  setUsers={this.props.setUsers}
+                  toggleLoading={this.props.toggleFollow} />
+          </>
+  }
+}
 
 let mapStateToProps = (state) => {
   return {
@@ -13,29 +55,13 @@ let mapStateToProps = (state) => {
     pageSize: state.usersPage.pageSize,
     currentPage: state.usersPage.currentPage,
     totalUsersCount: state.usersPage.totalUsersCount,
-    profilePic: profilePic
-  }
-}
-
-let mapDispatchToProps = (dispatch) => {
-  return {
-    toggleFollow: (userId) => {
-      dispatch(toggleFollowAC(userId));
-    },
-    setUsers: (users) => {
-        dispatch(setUsersAC(users));
-    },
-    setUsersCount: (count) => {
-        dispatch(setUsersCountAC(count));
-    },
-    changeCurrentPage: (page) => {
-        dispatch(changeCurrentPageAC(page));
-    }
+    profilePic: profilePic,
+    isLoading: state.usersPage.isLoading
   }
 }
 
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, { toggleFollow, setUsers, setUsersCount,
+  changeCurrentPage, toggleLoading })(UsersContainer);
 
 
-export default UsersContainer;

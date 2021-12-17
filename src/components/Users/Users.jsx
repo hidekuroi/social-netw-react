@@ -1,65 +1,57 @@
 import React from "react";
-import classes from './Users.module.css'
-import * as axios from 'axios';
+import classes from './Users.module.css';
 
 
-class Users extends React.Component {
-    
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}`)
-        .then(response => {
-            this.props.setUsers(response.data.items);
-            this.props.setUsersCount(response.data.totalCount);
-        });
-    }
 
-    onPageChange(p) {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`)
-        .then(response => {
-            console.log('dicksters ' + this.props.currentPage)
+const Users = (props) => {
 
-            this.props.setUsers(response.data.items);
-        });
+    let profilePic = props.profilePic;
+
+    let changePage = (p) => {
+        props.onPageChange(p);
     }
 
 
-    render() {
-        let profilePic = this.props.profilePic;
-
-        let endPages = [];
-
-        let changePage = (p) => {
-            console.log("1: "+this.props.currentPage);
-            this.props.changeCurrentPage(p);
-            console.log("2: "+this.props.currentPage);
-            this.onPageChange(p);
-        }
-
-        let pages = (p) => {
-            let numberOfPages = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
-            console.log("pages: "+this.props.currentPage);
-            if(this.props.currentPage <= 3){
+    let pages = () => {
+            let endPages = [];
+            let numberOfPages = Math.ceil(props.totalUsersCount / props.pageSize);
+                if(props.currentPage <= 4){
                 for(let i=1;i<=6;i++){
                     endPages.push(i);  
                 }
+                endPages.push('...');
                 endPages.push(numberOfPages);
                 return endPages;
             }
-            if(this.props.currentPage >3){
+            if(props.currentPage >4 && props.currentPage < numberOfPages - 3){
                 endPages.push(1);
-                for(let i=this.props.currentPage - 2; i <= this.props.currentPage + 2; i++){
+                endPages.push('...');
+                for(let i=props.currentPage - 2; i <= props.currentPage + 2; i++){
                     endPages.push(i);
                 }
+                endPages.push('...');
                 endPages.push(numberOfPages);
                 return endPages;
             }
+            if(props.currentPage >= numberOfPages-3) {
+                endPages.push(1);
+                endPages.push('...');
+                for(let i=numberOfPages - 5; i<= numberOfPages; i++){
+                    endPages.push(i);
+                }
+                return endPages
+            }
         } 
-        
 
 
+
         
-        return <div>{pages().map(p => {return (<span className={classes.pageNumber} onClick={() => {changePage(p)}}>{p}</span>)})}<div>{
-            this.props.users.map(u => <div key={u.id}>
+        return <div>{pages().map(p => {return (<span className={`${classes.pageNumber} ${props.currentPage === p && classes.selected}`} onClick={() => {
+            if(typeof(p) == 'number'){
+            changePage(p)
+            }
+        }}>{p}</span>)})}<div>{
+            props.users.map(u => <div key={u.id}>
                 <div>
                     <div>
                         <img src={u.photos.small ? u.photos.small : profilePic} className={classes.profilePicture}/>
@@ -68,10 +60,10 @@ class Users extends React.Component {
                         {
                             u.followed
                              ? <button onClick={() => {
-                                 this.props.toggleFollow(u.id)
+                                 props.toggleFollow(u.id)
                                 }}>Unfollow</button>
                              : <button onClick={() => {
-                                 this.props.toggleFollow(u.id)
+                                 props.toggleFollow(u.id)
                                 }}>Follow</button>
                         }
                     </div>
@@ -89,7 +81,7 @@ class Users extends React.Component {
             </div>
             )
         }</div></div>
+    
     }
-}
 
 export default Users;
