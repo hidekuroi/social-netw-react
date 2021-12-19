@@ -8,9 +8,15 @@
   }
 
   .auth {
+    cursor: pointer;
     float: right;
     padding-top: 5px;
     padding-right: 10px;
     font-size: 1.2em;
     font-weight: bold;
+    color: black;
+  }
+
+  .auth:hover{
+    color:white;
   }

@@ -1,3 +1,5 @@
+import { authAPI } from "../api/api";
+
 const SET_AUTH_USER = 'SET-AUTH-USER';
 
 const initialState = {
@@ -19,3 +21,14 @@ export default (state = initialState, action) => {
 }
 
 export const setAuthUser = (authData) => ({type: SET_AUTH_USER, authData});
+
+
+export const authCheck = () => {
+    return (dispatch) => {
+        authAPI.isAuth()
+        .then(data => {
+            dispatch(setAuthUser(data.data));
+            
+        });
+    }
+}

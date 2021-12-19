@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_USER_PAGE = 'SET-USER-PAGE';
@@ -66,5 +68,16 @@ export const addPost = () => ({type: ADD_POST});
 export const setUserPage = (userData) => ({type: SET_USER_PAGE, userData});
 export const updatePostText = (text) => ({type: UPDATE_POST_TEXT, newText: text});
 export const changePhotoSize = () => ({type: CHANGE_PHOTO_SIZE});
+
+
+export const getProfile = (userId) => {
+    return (dispatch) => {
+        usersAPI.getProfile(userId)
+        .then(data => {
+            dispatch(setUserPage(data));
+        });
+    }
+}
+
 
 export default profileReducer;
