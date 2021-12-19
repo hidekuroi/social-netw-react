@@ -10,7 +10,7 @@ let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
 class UsersContainer extends React.Component {
     
   componentDidMount() {
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}`, {withCredentials: true})
       .then(response => {
           this.props.setUsers(response.data.items);
           this.props.setUsersCount(response.data.totalCount);
@@ -26,7 +26,7 @@ class UsersContainer extends React.Component {
   onPageChange = (p) => {
       this.props.changeCurrentPage(p);
       this.props.toggleLoading();
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`, {withCredentials: true})
       .then(response => {
           this.props.toggleLoading();
           this.props.setUsers(response.data.items);
