@@ -23,7 +23,8 @@ const ProfileInfo = (props) => {
                 <img src={props.userPageData.userPhoto ? props.userPageData.userPhoto : spot} className={!props.userPageData.userPhoto ? classes.small : null} onClick={changePhotoSize} alt="profpiclarge" />
             </div>
             <div className={classes.userName}>{props.userPageData.userPage.fullName}</div>
-           <div className={classes.status}><ProfileStatus /></div>
+           <div className={classes.status}><ProfileStatus updateStatus={props.userPageData.updateStatus}
+                                                          status={props.userPageData.status}/></div>
             {/* <div className={classes.aboutMe}>{props.userPageData.userPage.aboutMe}</div> */}
         </div>
         

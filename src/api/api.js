@@ -19,10 +19,21 @@ export const usersAPI = {
     getUsers(pageSize = 10, pageNumber = 1) {
         return instance.get(`users?count=${pageSize}&page=${pageNumber}`)
         .then(response => response.data)
-    },
+    }
+}
+
+export const profileAPI = {
     getProfile(userId = 21334) {
-        return instance.get(`profile/` + userId).
-        then(response => response.data)
+        return instance.get(`profile/` + userId)
+        .then(response => response.data)
+    },
+    getStatus(userId = 21334) {
+        return instance.get(`profile/status/` + userId)
+        .then(response => response.data)
+    },
+    updateStatus(status) {
+        return instance.put('profile/status', {status})
+        .then(response => response.data)
     }
 }
 

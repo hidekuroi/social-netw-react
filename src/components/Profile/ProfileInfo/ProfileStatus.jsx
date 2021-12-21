@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class ProfileStatus extends Component {
 
     state = {
-        status: 'status',
+        status: this.props.status,
         editMode: false
     }
 
@@ -24,6 +24,15 @@ export default class ProfileStatus extends Component {
         this.setState({
             status: newText
         });
+        this.props.updateStatus(newText);
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.status !== this.props.status){
+            this.setState({
+                status: this.props.status
+            });
+        }
     }
 
     render() {
@@ -31,7 +40,7 @@ export default class ProfileStatus extends Component {
             <div>
                 {!this.state.editMode &&
                 <div>
-                    <span onClick={this.activateEditMode}>{this.state.status}</span>
+                    <span onClick={this.activateEditMode}>{this.state.status || 'There are no status'}</span>
                 </div>
                 }
                 {this.state.editMode &&
