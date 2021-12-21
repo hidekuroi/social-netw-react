@@ -3,6 +3,8 @@ import Users from "./Users";
 import { changeCurrentPage, toggleFollow, toggleLoading, addFollowingUser, getUsers, followUser, unfollowUser} from '../../redux/usersReducer';
 import Loading from '../common/Loading';
 import { connect } from 'react-redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
 
@@ -50,7 +52,10 @@ let mapStateToProps = (state) => {
   }
 }
 
+export default compose(
+  connect(mapStateToProps, { changeCurrentPage, toggleLoading, getUsers, followUser, unfollowUser }),
+  withAuthRedirect
+)(UsersContainer);
 
-export default connect(mapStateToProps, { changeCurrentPage, toggleLoading, getUsers, followUser, unfollowUser })(UsersContainer);
 
 

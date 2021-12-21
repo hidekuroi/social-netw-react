@@ -4,3 +4,16 @@
     padding-top: 20px;
     padding-bottom: 10px;
 }
+
+.postcreation{
+    margin-top: 10px;
+    padding-top: 15px;
+    font-size: 1.5em;
+    background-color: white;
+}
+
+.addpost{
+    margin-top: 15px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}

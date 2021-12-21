@@ -23,12 +23,15 @@ const MyPosts = (props) => {
 
     return(
         <div>
+          <div className={classes.postcreation}>How are you?</div>
+          <div className={classes.addpost}>
           <div>
             <textarea ref={newPostElement} onChange={onInputFieldChange} value={props.currentValue} />
         </div>
         <div>
             <button onClick={onAddPost}>Add post</button>
         </div>
+          </div>
           <div className={classes.feedHeader}>My posts:</div>
           <div className={classes.posts}>
             {posts}

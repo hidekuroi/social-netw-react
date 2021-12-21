@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setUserPage, changePhotoSize, getProfile } from '../../redux/profileReducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 
 class ProfileContainer extends Component {
     componentDidMount() {
@@ -18,10 +19,16 @@ class ProfileContainer extends Component {
     }
 }
 
+
 let mapStateToProps = (state) => ({
     userPage: state.profile.userPage,
-    userPhoto: state.profile.userPhoto
+    userPhoto: state.profile.userPhoto,
 });
 
 
-export default connect(mapStateToProps,{setUserPage, changePhotoSize, getProfile})(withRouter(ProfileContainer));
+export default compose(
+    connect(mapStateToProps,{setUserPage, changePhotoSize, getProfile}),
+    withRouter,
+)(ProfileContainer);
+
+

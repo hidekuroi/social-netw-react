@@ -5,18 +5,26 @@ const SET_AUTH_USER = 'SET-AUTH-USER';
 const initialState = {
         id: null,
         login: null,
-        email: null
+        email: null,
+        isAuth: false
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
 
     case SET_AUTH_USER:
-        let stateCopy = { ...state, ...action.authData }
-        return stateCopy;
+        if(action.authData.resultCode == 0) {
+            let stateCopy = { ...state, ...action.authData.data};
+            stateCopy.isAuth = true;
+            return stateCopy;
+        }
+        else{
+            return state;
+        }
+        
 
     default:
-        return state
+        return state;
     }
 }
 
@@ -27,8 +35,7 @@ export const authCheck = () => {
     return (dispatch) => {
         authAPI.isAuth()
         .then(data => {
-            dispatch(setAuthUser(data.data));
-            
+            dispatch(setAuthUser(data));
         });
     }
 }
