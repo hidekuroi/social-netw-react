@@ -1,5 +1,4 @@
 const SEND_MESSAGE = 'SEND-MESSAGE';
-const UPDATE_MESSENGER_INPUT = 'UPDATE-MESSENGER-INPUT';
 
 let initialState = {
     messagesData: [
@@ -22,27 +21,21 @@ const dialogsReducer = (state = initialState, action) => {
         case SEND_MESSAGE: {
             let newMessage = {
                 id: state.messagesData.length + 1,
-                message: state.messengerInputField,
+                message: action.messageData.messengerInput,
             };
             let stateCopy = {...state};
             stateCopy.messagesData = [...state.messagesData];
             stateCopy.messagesData.push(newMessage);
-            stateCopy.messengerInputField = '';
             return stateCopy;
         }
-        case UPDATE_MESSENGER_INPUT: {
-            let stateCopy = {...state}
-            stateCopy.messengerInputField = action.newText;
-            return stateCopy;
-        }
+        
         default: {
             return state;
         }
     }
 }
 
-export const sendMessage = () => ({type: SEND_MESSAGE});
+export const sendMessage = (messageData) => ({type: SEND_MESSAGE, messageData});
 
-export const updateMessengerInput = (text) => ({type: UPDATE_MESSENGER_INPUT, newText: text});
 
 export default dialogsReducer;

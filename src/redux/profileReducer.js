@@ -1,7 +1,6 @@
 import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_USER_PAGE = 'SET-USER-PAGE';
 const CHANGE_PHOTO_SIZE = 'CHANGE-PHOTO-SIZE';
 const SET_STATUS = 'SET-STATUS';
@@ -22,25 +21,18 @@ const profileReducer = (state = initialState, action) => {
     
     switch(action.type){
         case ADD_POST: {
-            if(state.newPostText == ''){
+            console.log(action);
+            if(action.postText == ''){
                 return state;
             }
             let newPost = {
                 id: state.postsData.length + 1,
-                text: state.newPostText,
+                text: action.postText,
                 likesCount: 0
             };
             let stateCopy = {...state};
             stateCopy.postsData = [...state.postsData];
             stateCopy.postsData.push(newPost);
-            stateCopy.newPostText = '';
-            console.log(state)
-            return stateCopy;
-        }
-
-        case UPDATE_POST_TEXT: {
-            let stateCopy = {...state};
-            stateCopy.newPostText = action.newText;
             return stateCopy;
         }
 
@@ -71,9 +63,8 @@ const profileReducer = (state = initialState, action) => {
 
 }
 
-export const addPost = () => ({type: ADD_POST});
+export const addPost = (postData) => ({type: ADD_POST, postText: postData.addPostField});
 export const setUserPage = (userData) => ({type: SET_USER_PAGE, userData});
-export const updatePostText = (text) => ({type: UPDATE_POST_TEXT, newText: text});
 export const changePhotoSize = () => ({type: CHANGE_PHOTO_SIZE});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 

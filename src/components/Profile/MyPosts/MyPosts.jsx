@@ -1,37 +1,41 @@
 import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
+import { Field, reduxForm } from 'redux-form';
+
+
+const AddPostForm = (props) => {
+       return( 
+          <form className={classes.addpost} onSubmit={props.handleSubmit}>
+            <div>
+                <Field name="addPostField" type="text" component="textarea"/>
+            </div>
+            <div>
+                <button>Add post</button>
+            </div>
+          </form>
+       );
+}
+
+const AddPostReduxForm = reduxForm({
+  form: 'addPostForm'
+})(AddPostForm);
 
 const MyPosts = (props) => {
 
   let postsData = props.postsData;
 
-
   let posts = postsData
   .map(el => (<Post userPhoto={props.userPhoto} message={el.text} id={el.id} />));
 
-  let newPostElement = React.createRef();
-
-    let onAddPost = () => {
-        props.addPost();
-    }
-
-    let onInputFieldChange = () => {
-      let text = newPostElement.current.value;
-      props.updatePostText(text);
+    let onAddPost = (formData) => {
+        props.addPost(formData);
     }
 
     return(
         <div>
           <div className={classes.postcreation}>How are you?</div>
-          <div className={classes.addpost}>
-          <div>
-            <textarea ref={newPostElement} onChange={onInputFieldChange} value={props.currentValue} />
-        </div>
-        <div>
-            <button onClick={onAddPost}>Add post</button>
-        </div>
-          </div>
+          <AddPostReduxForm onSubmit={onAddPost} />
           <div className={classes.feedHeader}>My posts:</div>
           <div className={classes.posts}>
             {posts}
@@ -39,5 +43,7 @@ const MyPosts = (props) => {
         </div>
     );
 }
+
+
 
 export default MyPosts;

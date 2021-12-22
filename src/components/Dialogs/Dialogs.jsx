@@ -2,7 +2,24 @@ import React from 'react';
 import Message from './Message/Message';
 import classes from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
+import { Field, reduxForm } from 'redux-form';
 
+const MessengerInputForm = (props) => {
+    return(
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field  component="textarea" type="text" placeholder="Input your message here" name="messengerInput"></Field>
+            </div>
+            <div>
+                <button>Send</button>
+            </div>
+        </form>
+    );
+}
+
+const MessengerInputReduxForm = reduxForm({
+    form: 'messenger'
+})(MessengerInputForm);
 
 const Dialogs = (props) => {
 
@@ -17,13 +34,9 @@ const Dialogs = (props) => {
     let messages = messagesData
     .map(el => (<Message text={el.message} id={el.id} />));
 
-    const onInputFieldChange = (e) => {
-        let text = e.target.value;
-        props.updateMessengerInput(text);
-    };
-
-    const onSendMessage = () => {
-        props.sendMessage();
+    const onSendMessage = (formData) => {
+        props.sendMessage(formData);
+        props.reset('messenger');
     };
 
     return(
@@ -33,13 +46,10 @@ const Dialogs = (props) => {
             </div>
             <div className={classes.messenger}>
                 <div className={classes.messages}>
-                 {messages}
+                    {messages}
                 </div>
                 <div className={classes.messageInput}>
-                    <textarea placeholder='Input your message'
-                            value={props.messengerData.messengerInputField}
-                            onChange={ onInputFieldChange }></textarea>
-                    <button onClick={ onSendMessage }>Send</button>
+                    <MessengerInputReduxForm onSubmit={onSendMessage}/>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { authAPI } from "../api/api";
-
+const SUCCESFUL_SIGN_IN = 'SUCCESFUL-SIGN-IN'
 const SET_AUTH_USER = 'SET-AUTH-USER';
 
 const initialState = {
@@ -21,14 +21,17 @@ export default (state = initialState, action) => {
         else{
             return state;
         }
-        
 
+    case SUCCESFUL_SIGN_IN: 
+        return {...state, isAuth: true}
+        
     default:
         return state;
     }
 }
 
 export const setAuthUser = (authData) => ({type: SET_AUTH_USER, authData});
+export const succesfulSignIn = () => ({type: SUCCESFUL_SIGN_IN});
 
 
 export const authCheck = () => {
@@ -36,6 +39,17 @@ export const authCheck = () => {
         authAPI.isAuth()
         .then(data => {
             dispatch(setAuthUser(data));
+        });
+    }
+}
+
+export const signIn = (formData) => {
+    return (dispatch) => {
+        authAPI.login(formData)
+        .then(data => {
+            if(data.resultCode === 0){
+                dispatch(succesfulSignIn());
+            }
         });
     }
 }

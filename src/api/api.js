@@ -1,4 +1,5 @@
 import * as axios from 'axios';
+import Login from '../components/Login/Login';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -11,6 +12,11 @@ const instance = axios.create({
 export const authAPI = {
     isAuth() {
         return instance.get(`auth/me`)
+        .then(response => response.data)
+    },
+    login(formData) {
+        console.log(formData);
+        return instance.post(`auth/login`, {...formData})
         .then(response => response.data)
     }
 }
