@@ -1,5 +1,4 @@
 import { authAPI } from "../api/api";
-const SUCCESFUL_SIGN_IN = 'SUCCESFUL-SIGN-IN'
 const SET_AUTH_USER = 'SET-AUTH-USER';
 
 const initialState = {
@@ -13,25 +12,30 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
     case SET_AUTH_USER:
-        if(action.authData.resultCode == 0) {
-            let stateCopy = { ...state, ...action.authData.data};
-            stateCopy.isAuth = true;
+        console.log(action.authData)
+        if(action.authData) {
+            if(action.authData.resultCode == 0){
+                let stateCopy = { ...state, ...action.authData.data};
+                stateCopy.isAuth = true;
+                return stateCopy;
+            }
+        }
+        else if(!action.authData){
+            let stateCopy = {...state};
+            stateCopy.login = null;
+            stateCopy.email = null;
+            stateCopy.id = null;
+            stateCopy.isAuth = false;
+            
             return stateCopy;
         }
-        else{
-            return state;
-        }
 
-    case SUCCESFUL_SIGN_IN: 
-        return {...state, isAuth: true}
-        
     default:
         return state;
     }
 }
 
 export const setAuthUser = (authData) => ({type: SET_AUTH_USER, authData});
-export const succesfulSignIn = () => ({type: SUCCESFUL_SIGN_IN});
 
 
 export const authCheck = () => {
@@ -48,7 +52,19 @@ export const signIn = (formData) => {
         authAPI.login(formData)
         .then(data => {
             if(data.resultCode === 0){
-                dispatch(succesfulSignIn());
+                dispatch(authCheck());
+                
+            }
+        });
+    }
+}
+
+export const signOut = () => {
+    return (dispatch) => {
+        authAPI.logout()
+        .then(data => {
+            if(data.resultCode === 0){
+                dispatch(setAuthUser());
             }
         });
     }

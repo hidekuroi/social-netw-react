@@ -1,0 +1,13 @@
+.errorField {
+    display: inline-block;
+    border: 2px solid orangered;
+}
+
+.errorMessage {
+    display: inline;
+    border: 2px solid orangered;
+    border-radius: 8%;
+    transition: 0.2s;
+    color: white;
+    background-color: red;
+}

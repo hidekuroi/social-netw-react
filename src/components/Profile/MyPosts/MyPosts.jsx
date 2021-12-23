@@ -30,6 +30,7 @@ const MyPosts = (props) => {
 
     let onAddPost = (formData) => {
         props.addPost(formData);
+        props.reset('addPostForm');
     }
 
     return(
