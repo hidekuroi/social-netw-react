@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './Menu.module.css';
 
-const Menu = () => {
+const Menu = (props) => {
+  if(props.isAuth){
     return(
         <nav className={classes.nav}>
           <div className={classes.menu}>
@@ -27,6 +28,16 @@ const Menu = () => {
           </div>
         </nav>
     );
+  }
+  return(
+    <nav className={classes.nav}>
+          <div className={classes.menu}>
+            <div className={classes.item}>
+              <NavLink to='/users' activeClassName={classes.activeLink}>Users</NavLink>
+            </div>
+          </div>
+        </nav>
+  );
 }
 
 export default Menu;

@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { required, email } from '../utils/validators';
 import { Input } from '../common/FormControls';
 import { Redirect } from 'react-router-dom';
+import classes from './Login.module.css';
 
 const LoginForm = (props) => {
     return (
@@ -19,6 +20,10 @@ const LoginForm = (props) => {
                 <div>
                     <button type="submit">Sign in</button>
                 </div>
+                { props.error && <div className={classes.errorBox}>
+                        {props.error}
+                  </div>
+                }
         </form>
     );
 }

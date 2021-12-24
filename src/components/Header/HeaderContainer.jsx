@@ -11,8 +11,7 @@ class HeaderContainer extends Component {
     }
 
     componentDidUpdate() {
-        console.log('dixon');
-        console.log(this.props);
+        
     }
 
     render() {

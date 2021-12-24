@@ -8,7 +8,7 @@ const ProfileInfo = (props) => {
     let spot='https://wiki-vk.ru/s/001/512/41.png';
     
     if(!props.userPageData.userPage){
-        return <Loading />
+        return <Loading color={'white'}/>
     }
 
     let changePhotoSize = () => {

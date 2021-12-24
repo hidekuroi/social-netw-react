@@ -32,11 +32,11 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userId = 21334) {
+    getProfile(userId) {
         return instance.get(`profile/` + userId)
         .then(response => response.data)
     },
-    getStatus(userId = 21334) {
+    getStatus(userId) {
         return instance.get(`profile/status/` + userId)
         .then(response => response.data)
     },

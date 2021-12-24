@@ -11,9 +11,10 @@ const Navbar = (props) => {
       <RecentDialogs recentDialogs={props.dialogsData} />
     );
   }
+  if(props.auth.isAuth){
     return(
       <div>
-        <Menu />
+        <Menu isAuth={props.auth.isAuth} />
         <Route path='/profile' render={recentDialogs} />
         <Route path='/feed' render={recentDialogs} />
         <Route path='/settings' render={recentDialogs} />
@@ -21,7 +22,10 @@ const Navbar = (props) => {
         <Route path='/music' render={recentDialogs } />
       </div>
     );
-    
+  }
+  return(
+    <div><Menu isAuth={props.auth.isAuth}/></div>
+  );
 }
 
 export default Navbar;

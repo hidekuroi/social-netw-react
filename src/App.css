@@ -1,6 +1,12 @@
 body{
   min-height: 100vh;
 }
+
+.darkTheme{
+  transition: 0.3s;
+  background-color: #232324;
+}
+
 .app-wrapper{
   display: grid;
   width: 1200px;
@@ -15,6 +21,8 @@ body{
   grid-auto-columns: 2fr 10fr ;
   grid-gap: 5px;
 }
+
+
 
 .app-wrapper > .header{
   grid-area: h;
@@ -37,4 +45,13 @@ body{
   grid-area: f;
   background-color: cyan;
   color: white;
+}
+
+.spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 25px;
+  padding-top: auto;
+  padding-bottom: auto;
 }

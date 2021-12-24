@@ -8,8 +8,27 @@ import { compose } from 'redux';
 class ProfileContainer extends Component {
     componentDidMount() {
         let userId = this.props.match.params.userId;
+        if(!userId){
+            userId = this.props.auth.id;
+            if(!userId){
+                this.props.history.push('/login');
+                console.log(this.props);
+            }
+        }
         this.props.getStatus(userId);
         this.props.getProfile(userId);
+    }
+
+    componentDidUpdate() {
+        let userId = this.props.match.params.userId;
+        if(!userId){
+            userId = this.props.auth.id;
+            if(!userId){
+                this.props.history.push('/login');
+                console.log(this.props);
+            }
+        }
+        
     }
 
     render() {
@@ -23,7 +42,8 @@ class ProfileContainer extends Component {
 let mapStateToProps = (state) => ({
     userPage: state.profile.userPage,
     userPhoto: state.profile.userPhoto,
-    status: state.profile.status
+    status: state.profile.status,
+    auth: state.auth
 });
 
 

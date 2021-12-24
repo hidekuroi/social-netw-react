@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { authAPI } from "../api/api";
 const SET_AUTH_USER = 'SET-AUTH-USER';
 
@@ -12,7 +13,6 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
     case SET_AUTH_USER:
-        console.log(action.authData)
         if(action.authData) {
             if(action.authData.resultCode == 0){
                 let stateCopy = { ...state, ...action.authData.data};
@@ -40,7 +40,7 @@ export const setAuthUser = (authData) => ({type: SET_AUTH_USER, authData});
 
 export const authCheck = () => {
     return (dispatch) => {
-        authAPI.isAuth()
+       return authAPI.isAuth()
         .then(data => {
             dispatch(setAuthUser(data));
         });
@@ -54,6 +54,10 @@ export const signIn = (formData) => {
             if(data.resultCode === 0){
                 dispatch(authCheck());
                 
+            }
+            else{
+                let message = data.messages.length > 0 ? data.messages[0] : 'Unknown error';
+                dispatch(stopSubmit('login',{_error: message}));
             }
         });
     }

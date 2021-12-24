@@ -3,12 +3,12 @@ import Loader from 'react-loader-spinner';
 import './Loading.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-const Loading = () => {
+const Loading = (props) => {
     return (
         <div className='loader'>
             <Loader
                 type="Oval"
-                color="rgb(255, 255, 255)"
+                color={props.color}
                 height={100}
                 width={100}
             />

@@ -3,7 +3,6 @@ import Users from "./Users";
 import { changeCurrentPage, toggleFollow, toggleLoading, addFollowingUser, getUsers, followUser, unfollowUser} from '../../redux/usersReducer';
 import Loading from '../common/Loading';
 import { connect } from 'react-redux';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
 let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
@@ -25,7 +24,7 @@ class UsersContainer extends React.Component {
 
   render() {
     return <>
-            {this.props.isLoading ? <Loading /> : null}
+            {this.props.isLoading ? <Loading color={'white'}/> : null}
            <Users users={this.props.users}
                   currentPage={this.props.currentPage}
                   changeCurrentPage={this.props.changeCurrentPage}
@@ -53,8 +52,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-  connect(mapStateToProps, { changeCurrentPage, toggleLoading, getUsers, followUser, unfollowUser }),
-  withAuthRedirect
+  connect(mapStateToProps, { changeCurrentPage, toggleLoading, getUsers, followUser, unfollowUser })
 )(UsersContainer);
 
 
