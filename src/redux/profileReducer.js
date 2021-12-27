@@ -13,7 +13,6 @@ let initialState = {
         userPage: null,
         userPhoto: null,
         status: '',
-        newPostText:''
 };
 
 
@@ -21,8 +20,7 @@ const profileReducer = (state = initialState, action) => {
     
     switch(action.type){
         case ADD_POST: {
-            console.log(action);
-            if(action.postText == ''){
+            if(!action.postText){
                 return state;
             }
             let newPost = {

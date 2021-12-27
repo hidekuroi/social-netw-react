@@ -23,6 +23,7 @@ const AddPostReduxForm = reduxForm({
 
 const MyPosts = (props) => {
 
+
   let postsData = props.postsData;
 
   let posts = postsData

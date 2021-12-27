@@ -76,7 +76,7 @@ export const toggleLoading = () => ({type: TOGGLE_LOADING});
 export const addFollowingUser = (isFollowingInProgress, userId) => ({type: ADD_FOLLOWING_USER, isFollowingInProgress, userId});
 
 
-export const getUsers = (pageSize, page = 1) => {   
+export const requestUsers = (pageSize, page = 1) => {   
    return (dispatch) => {
     dispatch(toggleLoading());
      usersAPI.getUsers(pageSize, page)

@@ -14,7 +14,6 @@ class Settings extends React.Component  {
             Settings
             <button onClick={() => {
                 this.props.changeTheme();
-                console.log(this.props.darkTheme);
                 }}>Dark theme</button>
         </div>
         );
