@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Footer from './components/Footer/Footer';
 import Music from './components/Music/Music';
@@ -17,19 +17,21 @@ import Loading from './components/common/Loading';
 import Feed from './components/Feed/Feed';
 
 
-class App extends React.Component {
+const App = (props) => {
 
-  componentDidMount() {
-    this.props.initializeApp();
-  }
+  useEffect(() => {
+    if(!props.app.isInitialized){
+      props.initializeApp();
+    }    
+  }, [props.app.isInitialized])
   
-  render() {
-    if(!this.props.app.isInitialized){
+  const render = () => {
+    if(!props.app.isInitialized){
       return <div className="spinner"><Loading  color={'darkcyan'}/></div>
     }
     else{
       return (
-        <body className={this.props.app.darkTheme ? 'darkTheme' : null}>
+        <body className={props.app.darkTheme ? 'darkTheme' : null}>
         <div className="app-wrapper puk">
           <HeaderContainer className='header'/>
           <NavbarContainer className='navbar'/>        
@@ -50,6 +52,8 @@ class App extends React.Component {
     );
     }
   }
+
+  return render();
 }
 
 let mapStateToProps = (state) => ({

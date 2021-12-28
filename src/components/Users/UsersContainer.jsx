@@ -24,7 +24,6 @@ const UsersContainer = (props) => {
       props.requestUsers(props.pageSize, page);
   }
 
-  
     return <>
             {props.isLoading ? <Loading color={'white'}/> : null}
            <Users users={props.users}
@@ -57,13 +56,3 @@ export default compose(
   React.memo,
   connect(mapStateToProps, { changeCurrentPage, toggleLoading, requestUsers, followUser, unfollowUser })
 )(UsersContainer);
-
-
-
-// componentDidMount() {
-  //   this.props.requestUsers(this.props.pageSize);
-  // }
-
-  // componentWillUnmount() {
-  //   this.props.changeCurrentPage(1);
-  // }

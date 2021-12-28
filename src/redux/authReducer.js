@@ -1,6 +1,6 @@
 import { stopSubmit } from "redux-form";
 import { authAPI } from "../api/api";
-const SET_AUTH_USER = 'SET-AUTH-USER';
+const SET_AUTH_USER = '/auth/SET-AUTH-USER';
 
 const initialState = {
         id: null,
@@ -39,18 +39,15 @@ export const setAuthUser = (authData) => ({type: SET_AUTH_USER, authData});
 
 
 export const authCheck = () => {
-    return (dispatch) => {
-       return authAPI.isAuth()
-        .then(data => {
+    return async (dispatch) => {
+       let data = await authAPI.isAuth();
             dispatch(setAuthUser(data));
-        });
     }
 }
 
 export const signIn = (formData) => {
-    return (dispatch) => {
-        authAPI.login(formData)
-        .then(data => {
+    return async (dispatch) => {
+        let data = await authAPI.login(formData);
             if(data.resultCode === 0){
                 dispatch(authCheck());
                 
@@ -59,17 +56,14 @@ export const signIn = (formData) => {
                 let message = data.messages.length > 0 ? data.messages[0] : 'Unknown error';
                 dispatch(stopSubmit('login',{_error: message}));
             }
-        });
     }
 }
 
 export const signOut = () => {
-    return (dispatch) => {
-        authAPI.logout()
-        .then(data => {
+    return async (dispatch) => {
+        let data = await authAPI.logout();
             if(data.resultCode === 0){
                 dispatch(setAuthUser());
             }
-        });
     }
 }

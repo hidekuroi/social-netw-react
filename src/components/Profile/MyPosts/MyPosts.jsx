@@ -3,7 +3,6 @@ import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 import { Field, reduxForm } from 'redux-form';
 
-
 const AddPostForm = (props) => {
        return( 
           <form className={classes.addpost} onSubmit={props.handleSubmit}>

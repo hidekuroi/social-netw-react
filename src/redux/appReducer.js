@@ -1,7 +1,7 @@
 import { authCheck } from "./authReducer";
 
-const SET_INITIALIZED = 'SET-INITIALIZED';
-const THEME_CHANGE = 'THEME-CHANGE';
+const SET_INITIALIZED = '/app/SET-INITIALIZED';
+const THEME_CHANGE = '/app/THEME-CHANGE';
 
 
 const initialState = {

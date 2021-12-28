@@ -1,0 +1,23 @@
+.profilePicture{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+
+    opacity: 1;
+	-webkit-transition: .1s ease-in-out;
+	transition: .1s ease-in-out;
+}
+
+.profilePicture:hover {
+	opacity: .5;
+}
+
+.username{
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.profpic:hover{
+    background-color: lightblue;
+    
+}

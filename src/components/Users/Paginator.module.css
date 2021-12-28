@@ -1,0 +1,19 @@
+.pageNumber{
+    font-size: 1.2em;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 0.5px solid white;
+    background-color: lightcoral;
+}
+
+.selected{
+    font-weight: bold;
+    background-color: lightblue;
+}
+
+.pageNumber:hover{
+    transition: 0.15s;
+    color:white;
+    background-color: cyan;
+    cursor: pointer;
+}

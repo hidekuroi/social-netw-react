@@ -1,42 +1,30 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setUserPage, changePhotoSize, getProfile, getStatus, updateStatus } from '../../redux/profileReducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
-class ProfileContainer extends Component {
-    componentDidMount() {
-        let userId = this.props.match.params.userId;
+const ProfileContainer = (props) => {
+
+    useEffect(() => {
+        console.log('breaaaaaaaaps')
+        let userId = props.match.params.userId;
         if(!userId){
-            userId = this.props.auth.id;
+            userId = props.auth.id;
             if(!userId){
-                this.props.history.push('/login');
-                console.log(this.props);
+                props.history.push('/login');
+                console.log(props);
             }
         }
-        this.props.getStatus(userId);
-        this.props.getProfile(userId);
-    }
+        props.getStatus(userId);
+        props.getProfile(userId);
+    }, [props.auth]);
 
-    componentDidUpdate() {
-        let userId = this.props.match.params.userId;
-        if(!userId){
-            userId = this.props.auth.id;
-            if(!userId){
-                this.props.history.push('/login');
-                console.log(this.props);
-            }
-        }
-        
-    }
-
-    render() {
         return (
-            <Profile {...this.props}/>
-        )
+            <Profile {...props}/>
+        );
     }
-}
 
 
 let mapStateToProps = (state) => ({
