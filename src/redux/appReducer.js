@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
     }
 }
 
-export const setInitialized = (isInitialized) => ({type: SET_INITIALIZED});
+export const setInitialized = () => ({type: SET_INITIALIZED});
 export const changeTheme  = () => ({type:THEME_CHANGE});
 
 export const initializeApp = () => {
