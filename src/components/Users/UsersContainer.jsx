@@ -4,7 +4,7 @@ import { changeCurrentPage, toggleLoading, requestUsers, followUser, unfollowUse
 import Loading from '../common/Loading';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { getCurrentPage, getFollowingProgress, getIsLoading, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selector';
+import { getCurrentPage, isAuthCheck, getFollowingProgress, getIsLoading, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selector';
 
 let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
 
@@ -35,7 +35,8 @@ const UsersContainer = (props) => {
                   profilePic={profilePic}
                   followingProgress={props.followingProgress}
                   followUser={props.followUser}
-                  unfollowUser={props.unfollowUser} />
+                  unfollowUser={props.unfollowUser}
+                  isAuth={props.isAuth} />
           </>
   
 }
@@ -48,7 +49,8 @@ let mapStateToProps = (state) => {
     totalUsersCount: getTotalUsersCount(state),
     profilePic: profilePic,
     isLoading: getIsLoading(state),
-    followingProgress: getFollowingProgress(state)
+    followingProgress: getFollowingProgress(state),
+    isAuth: isAuthCheck(state)
   }
 }
 

@@ -14,7 +14,7 @@ const User = (props) => {
                     </NavLink>
                 </div>
                 <div>
-                    {
+                   {props.isAuth ? 
                         u.followed
                             ? <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
                                 props.unfollowUser(u.id);
@@ -24,6 +24,7 @@ const User = (props) => {
 
                                 props.followUser(u.id);
                             }}>Follow</button>
+                            : <span></span>
                     }
                 </div>
             </div>

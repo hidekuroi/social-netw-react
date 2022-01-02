@@ -22,3 +22,7 @@ export const getFollowingProgress = (state) => {
     return state.usersPage.followingProgress;
 }
 
+export const isAuthCheck = (state) => {
+    return state.auth.isAuth;
+}
+
