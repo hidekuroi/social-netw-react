@@ -10,3 +10,12 @@ export const email = value => {
     }
     return undefined;
 }
+
+export const url = value => {
+    if(/^(http|https):\/\/[^ "]+$/.test(value)) {
+        return undefined;
+    }
+    if(!value) return undefined;
+    
+    return 'Invalid URL(s)'
+}

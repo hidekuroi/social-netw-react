@@ -16,6 +16,8 @@ const Form = (props) => {
                 <div>
                     <Field component="input" type="checkbox" name="rememberMe" />Remember Me
                 </div>
+                {props.captchaUrl && <img alt="captcha" className={classes.captchaImg} src={props.captchaUrl}/>}
+                {props.captchaUrl && <Field component={Input} validate={[required]} type="text" name="captcha"></Field>}
                 <div>
                     <button type="submit">Sign in</button>
                 </div>

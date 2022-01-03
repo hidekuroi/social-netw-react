@@ -49,16 +49,27 @@ export const profileAPI = {
         formData.append('image', file);
 
         return instance.put('profile/photo', formData)
+    },
+    uploadInfo(info){
+        return instance.put('profile', info)
+        .then(response => response.data);
+    }
+}
+
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get('security/get-captcha-url')
+        .then(response => response.data)
     }
 }
 
 export const followAPI = {
     followUser(userId) {
-        return instance.post(`follow/` + userId).
-        then(response => response.data)
+        return instance.post(`follow/` + userId)
+        .then(response => response.data)
     },
     unfollowUser(userId) {
-        return instance.delete(`follow/` + userId).
-        then(response => response.data)
+        return instance.delete(`follow/` + userId)
+        .then(response => response.data)
     }
 }

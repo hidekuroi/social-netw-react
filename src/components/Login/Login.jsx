@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom';
 import LoginForm from './LoginForm';
-import classes from './Login.module.css';
+//import classes from './Login.module.css';
 
 const Login = (props) => {
     let submit = (formData) => {
@@ -12,7 +12,7 @@ const Login = (props) => {
         
             <div>
                 <h1>Please sign in:</h1>
-                <LoginForm onSubmit={submit}/>
+                <LoginForm onSubmit={submit} captchaUrl={props.auth.captchaUrl}/>
             </div>
         }
         {props.auth.isAuth &&

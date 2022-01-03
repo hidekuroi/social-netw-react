@@ -26,7 +26,7 @@ const App = (props) => {
     if(!props.app.isInitialized){
       props.initializeApp();
     }    
-  }, [props.app.isInitialized])
+  }, [props, props.app.isInitialized])
   
   const render = () => {
     if(!props.app.isInitialized){

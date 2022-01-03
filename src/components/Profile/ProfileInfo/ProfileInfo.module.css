@@ -18,7 +18,7 @@
 
 .aboutMe{
     font-style: italic;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .small{
@@ -31,9 +31,27 @@
     margin-left: 5px;
     padding-left: 5px;
     padding-right: 5px;
+    margin-bottom: 10px;
 }
 
 .status:hover{
     cursor: pointer;
     background-color: lightskyblue;
+}
+
+.info{
+    border-top: 4px solid white;
+}
+
+.contacts{
+    font-weight: bold;
+}
+
+.contactItem{
+    display: inline-block;
+    border-top: 1px solid lightslategray;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: 10px;
+    font-weight: normal;
 }

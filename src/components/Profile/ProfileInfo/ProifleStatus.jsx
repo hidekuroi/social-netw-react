@@ -6,7 +6,9 @@ const ProifleStatus = (props) => {
     let [status, setStatus] = useState(props.status);
 
     const activateEditMode = () => {
+        if(props.authId === props.pageId){
         setEditMode(true);
+        }
     }
 
     const deactivateEditMode = () => {
@@ -26,7 +28,9 @@ const ProifleStatus = (props) => {
 
 
     return (
+     
         <div>
+            
               {!editMode &&
               <div>
                   <span onClick={activateEditMode}>{status || 'There are no status'}</span>
@@ -37,7 +41,9 @@ const ProifleStatus = (props) => {
                 <input autoFocus={true} onChange={changeText} onBlur={deactivateEditMode} value={status}></input>
             </div>
              }
+            
         </div>
+            
     )
 }
 

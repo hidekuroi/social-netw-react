@@ -4,7 +4,6 @@ import classes from './Users.module.css';
 import User from "./User/User";
 
 const Users = (props) => {  
-    console.log(props)
     return (
     <div>
         <Paginator {...props}/>

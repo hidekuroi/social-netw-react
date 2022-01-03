@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setUserPage, changePhotoSize, getProfile, getStatus, updateStatus, uploadPhoto } from '../../redux/profileReducer';
+import { setUserPage, changePhotoSize, getProfile, getStatus, updateStatus, uploadPhoto, uploadInfo } from '../../redux/profileReducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -34,7 +34,8 @@ let mapStateToProps = (state) => ({
 
 
 export default compose(
-    connect(mapStateToProps,{setUserPage, changePhotoSize, getProfile, getStatus, updateStatus, uploadPhoto}),
+    connect(mapStateToProps,{setUserPage, changePhotoSize, getProfile,
+                             getStatus, updateStatus, uploadPhoto, uploadInfo}),
     withRouter,
 )(ProfileContainer);
 

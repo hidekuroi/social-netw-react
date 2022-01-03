@@ -37,7 +37,7 @@ const profileReducer = (state = initialState, action) => {
         }
 
         case DELETE_POST: {
-            return {...state, postsData: state.postsData.filter(p => p.id != action.postId)}
+            return {...state, postsData: state.postsData.filter(p => p.id !== action.postId)}
         }
 
         case SET_USER_PAGE: {
@@ -46,7 +46,7 @@ const profileReducer = (state = initialState, action) => {
         }
 
         case CHANGE_PHOTO_SIZE: {
-                if(state.userPage.photos.small == state.userPhoto) {
+                if(state.userPage.photos.small === state.userPhoto) {
                     let stateCopy = {...state, userPhoto: state.userPage.photos.large};
                     return stateCopy;
                 }else {
@@ -56,7 +56,7 @@ const profileReducer = (state = initialState, action) => {
         }
 
         case CHANGE_PHOTO: {
-            if(state.userPage.photos.small == state.userPhoto){
+            if(state.userPage.photos.small === state.userPhoto){
                 let stateCopy = {...state, userPhoto: action.photos.small}
                 stateCopy.userPage.photos = action.photos;
                 return stateCopy;
@@ -115,6 +115,15 @@ export const uploadPhoto = (file) => {
         let data = await profileAPI.uploadPhoto(file);
             if(data.data.resultCode === 0){
                 dispatch(changePhoto(data.data.data.photos));
+            }
+    }
+}
+
+export const uploadInfo = (info) => {
+    return async (dispatch) => {
+        let data = await profileAPI.uploadInfo(info);
+            if(data.resultCode === 0){
+                dispatch(getProfile(info.userId));
             }
     }
 }
