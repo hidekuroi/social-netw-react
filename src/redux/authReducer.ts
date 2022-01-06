@@ -4,7 +4,15 @@ import { authAPI, securityAPI } from "../api/api";
 const SET_AUTH_USER = '/auth/SET-AUTH-USER';
 const SET_CAPTCHA_URL = '/auth/SET-CAPTCHA-URL'
 
-const initialState = {
+type InitialStateType = {
+    id: number | null,
+    login: string | null,
+    email: string | null,
+    isAuth: boolean,
+    captchaUrl: string | null
+}
+
+const initialState: InitialStateType = {
         id: null,
         login: null,
         email: null,
@@ -12,12 +20,12 @@ const initialState = {
         captchaUrl: null
 }
 
-export default (state = initialState, action) => {
+export default (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
 
     case SET_AUTH_USER:
         if(action.authData) {
-            if(action.authData.resultCode == 0){
+            if(action.authData.resultCode === 0){
                 let stateCopy = { ...state, ...action.authData.data};
                 stateCopy.isAuth = true;
                 return stateCopy;
@@ -41,19 +49,29 @@ export default (state = initialState, action) => {
     }
 }
 
-export const setAuthUser = (authData) => ({type: SET_AUTH_USER, authData});
-const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl});
+type SetAuthUserType = {
+    type: typeof SET_AUTH_USER,
+    authData: {id: number, login: string, email: string, isAuth: boolean} | null
+}
+
+type SetCaptchaUrlType = {
+    type: typeof SET_CAPTCHA_URL,
+    captchaUrl: string | null
+}
+
+export const setAuthUser = (authData: {id: number, login: string, email: string, isAuth: boolean} | null): SetAuthUserType => ({type: SET_AUTH_USER, authData});
+const setCaptchaUrl = (captchaUrl: string | null): SetCaptchaUrlType => ({type: SET_CAPTCHA_URL, captchaUrl});
 
 
 export const authCheck = () => {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
        let data = await authAPI.isAuth();
             dispatch(setAuthUser(data));
     }
 }
 
-export const signIn = (formData) => {
-    return async (dispatch) => {
+export const signIn = (formData: any) => {
+    return async (dispatch: any) => {
         let data = await authAPI.login(formData);
             if(data.resultCode === 0){
                 dispatch(authCheck());
@@ -70,18 +88,18 @@ export const signIn = (formData) => {
 }
 
 export const signOut = () => {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         let data = await authAPI.logout();
             if(data.resultCode === 0){
-                dispatch(setAuthUser());
+                dispatch(setAuthUser(null));
             }
     }
 }
 
 export const getCaptcha = () => {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         const data = await securityAPI.getCaptcha();
-        const captchaUrl = data.url;
+        const captchaUrl: string = data.url;
         dispatch(setCaptchaUrl(captchaUrl));
         
     }

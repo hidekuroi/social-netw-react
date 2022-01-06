@@ -60,7 +60,6 @@ const ProfileInfo = (props) => {
                                                           status={props.userPageData.status}
                                                           authId={props.userPageData.auth.id}
                                                           pageId={props.userPageData.userPage.userId}/></div>
-            {/* <div className={classes.aboutMe}>{props.userPageData.userPage.aboutMe}</div> */}
         </div>
 
         <div className={classes.info}>

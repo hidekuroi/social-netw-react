@@ -14,9 +14,12 @@ const ProfileContainer = (props) => {
             if(!userId){
                 props.history.push('/login');
             }
-        }
+            props.getStatus(userId);
+            props.getProfile(userId);
+        }else{
         props.getStatus(userId);
         props.getProfile(userId);
+        }
     }, [props.auth, props.match.params.userId]);
 
         return (

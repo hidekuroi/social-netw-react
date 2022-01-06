@@ -1,4 +1,7 @@
 import { profileAPI } from "../api/api";
+import { PhotosType, UserPageType, PostType } from "../types/types";
+
+//do not forget to add types for actions; and delete this "!"
 
 const ADD_POST = '/profile/ADD-POST';
 const SET_USER_PAGE = '/profile/SET-USER-PAGE';
@@ -7,7 +10,15 @@ const SET_STATUS = '/profile/SET-STATUS';
 const DELETE_POST = '/profile/DELETE-POST';
 const CHANGE_PHOTO = '/profile/CHANGE-PHOTO';
 
-let initialState = {
+
+type InitialStateType = {
+    postsData: Array<PostType>,
+    userPage: UserPageType | null,
+    userPhoto: string | null,
+    status: string
+}
+
+let initialState: InitialStateType = {
         postsData: [
             {id:1, text:'breaps, i love dicks', likesCount:228},
             {id:2, text:'lets celebrate and suck some dick', likesCount:1488}
@@ -18,7 +29,7 @@ let initialState = {
 };
 
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action: any): InitialStateType => {
     
     switch(action.type){
         case ADD_POST: {
@@ -46,23 +57,23 @@ const profileReducer = (state = initialState, action) => {
         }
 
         case CHANGE_PHOTO_SIZE: {
-                if(state.userPage.photos.small === state.userPhoto) {
-                    let stateCopy = {...state, userPhoto: state.userPage.photos.large};
+                if(state.userPage!.photos.small === state.userPhoto) {
+                    let stateCopy = {...state, userPhoto: state.userPage!.photos.large};
                     return stateCopy;
                 }else {
-                    let stateCopy = {...state, userPhoto: state.userPage.photos.small};
+                    let stateCopy = {...state, userPhoto: state.userPage!.photos.small};
                     return stateCopy;
                 }
         }
 
         case CHANGE_PHOTO: {
-            if(state.userPage.photos.small === state.userPhoto){
+            if(state.userPage!.photos!.small === state.userPhoto){
                 let stateCopy = {...state, userPhoto: action.photos.small}
-                stateCopy.userPage.photos = action.photos;
+                stateCopy.userPage!.photos = action.photos;
                 return stateCopy;
             }else {
                 let stateCopy = {...state, userPhoto: action.photos.large}
-                stateCopy.userPage.photos = action.photos;
+                stateCopy.userPage!.photos = action.photos;
                 return stateCopy;
             }
         }
@@ -79,30 +90,67 @@ const profileReducer = (state = initialState, action) => {
 
 }
 
-export const addPost = (postData) => ({type: ADD_POST, postText: postData.addPostField});
-export const setUserPage = (userData) => ({type: SET_USER_PAGE, userData});
-export const changePhotoSize = () => ({type: CHANGE_PHOTO_SIZE});
-export const setStatus = (status) => ({type: SET_STATUS, status});
-export const deletePost = (postId) => ({type: DELETE_POST, postId});
-const changePhoto = (photos) => ({type: CHANGE_PHOTO, photos});
+type AddPostType = {
+    type: typeof ADD_POST,
+    postText: string
+}
+export const addPost = (postData: any): AddPostType => ({type: ADD_POST, postText: postData.addPostField});
+
+type SetUserPageType = {
+    type: typeof SET_USER_PAGE,
+    userData: UserPageType
+}
+export const setUserPage = (userData: UserPageType): SetUserPageType => ({type: SET_USER_PAGE, userData});
+
+type ChangePhotoSizeType = {
+    type: typeof CHANGE_PHOTO_SIZE
+}
+export const changePhotoSize = (): ChangePhotoSizeType => ({type: CHANGE_PHOTO_SIZE});
+
+type SetStatusType = {
+    type: typeof SET_STATUS,
+    status: string
+}
+export const setStatus = (status: string) => ({type: SET_STATUS, status});
+
+type DeletePostType = {
+    type: typeof DELETE_POST,
+    postId: number
+}
+export const deletePost = (postId: number): DeletePostType => ({type: DELETE_POST, postId});
+
+type ChangePhotoType = {
+    type: typeof CHANGE_PHOTO,
+    photos: PhotosType
+}
+const changePhoto = (photos: PhotosType): ChangePhotoType => ({type: CHANGE_PHOTO, photos});
 
 
-export const getProfile = (userId) => {
-    return async (dispatch) => {
+export const getProfile = (userId: number) => {
+    return async (dispatch: any) => {
+        try{
         let data = await profileAPI.getProfile(userId);
         dispatch(setUserPage(data));
+        }
+        catch{
+            console.error('You are not signed in')
+        }
     }
 }
 
-export const getStatus = (userId) => {
-    return async (dispatch) => {
+export const getStatus = (userId: number) => {
+    return async (dispatch: any) => {
+        try{
         let data = await profileAPI.getStatus(userId);
             dispatch(setStatus(data));
+        }catch{
+            console.error('You are not signed in')
+        }
     }
 }
 
-export const updateStatus = (status) => {
-    return async (dispatch) => {
+export const updateStatus = (status: string) => {
+    return async (dispatch: any) => {
         let data = await profileAPI.updateStatus(status);
             if(data.resultCode === 0){
                 dispatch(setStatus(status));
@@ -110,8 +158,8 @@ export const updateStatus = (status) => {
     }
 }
 
-export const uploadPhoto = (file) => {
-    return async (dispatch) => {
+export const uploadPhoto = (file: any) => {
+    return async (dispatch: any) => {
         let data = await profileAPI.uploadPhoto(file);
             if(data.data.resultCode === 0){
                 dispatch(changePhoto(data.data.data.photos));
@@ -119,8 +167,8 @@ export const uploadPhoto = (file) => {
     }
 }
 
-export const uploadInfo = (info) => {
-    return async (dispatch) => {
+export const uploadInfo = (info: any) => {
+    return async (dispatch: any) => {
         let data = await profileAPI.uploadInfo(info);
             if(data.resultCode === 0){
                 dispatch(getProfile(info.userId));

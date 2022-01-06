@@ -1,6 +1,22 @@
 const SEND_MESSAGE = '/messenger/SEND-MESSAGE';
 
-let initialState = {
+type MessageType = {
+    id: number,
+    message: string
+}
+
+type DialogType = {
+    id: number,
+    name: string
+}
+
+type InitialStateType = {
+    messagesData: Array<MessageType>,
+    dialogsData: Array<DialogType>,
+    messengerInputField: string
+}
+
+let initialState: InitialStateType = {
     messagesData: [
         {id: 1, message: 'Ты Евгений Цыганов?'},
         {id: 2, message: 'если да, пошёл нахуй'},
@@ -16,9 +32,10 @@ let initialState = {
 };
 
 
-const dialogsReducer = (state = initialState, action) => {
+const dialogsReducer = (state = initialState, action: any): InitialStateType => {
     switch(action.type){
         case SEND_MESSAGE: {
+            console.log(action);
             let newMessage = {
                 id: state.messagesData.length + 1,
                 message: action.messageData.messengerInput,
@@ -35,7 +52,12 @@ const dialogsReducer = (state = initialState, action) => {
     }
 }
 
-export const sendMessage = (messageData) => ({type: SEND_MESSAGE, messageData});
+type SendMessageType = {
+    type: typeof SEND_MESSAGE,
+    messageData: {messengerInput: string}
+}
+
+export const sendMessage = (messageData: {messengerInput: string}): SendMessageType => ({type: SEND_MESSAGE, messageData});
 
 
 export default dialogsReducer;

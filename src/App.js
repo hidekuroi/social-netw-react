@@ -3,7 +3,7 @@ import './App.css';
 import Footer from './components/Footer/Footer';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
@@ -23,10 +23,22 @@ const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
 const App = (props) => {
 
   useEffect(() => {
+    const errorCaught = (reason, promise) => {
+      alert('Some error occured');
+    }
+    function subscribeErrorsHandler() {
+      window.addEventListener('unhandledrejection', errorCaught);
+    }
+    subscribeErrorsHandler();
+    
     if(!props.app.isInitialized){
       props.initializeApp();
     }    
+    return function unsubscribeErrorsHandler(){
+      window.removeEventListener('unhandledrejection', errorCaught);
+    };
   }, [props, props.app.isInitialized])
+  
   
   const render = () => {
     if(!props.app.isInitialized){
@@ -39,18 +51,19 @@ const App = (props) => {
           <HeaderContainer className='header'/>
           <NavbarContainer className='navbar'/>        
           <div className='app-wrapper-content'>
-            <Route path='/messages' render={ () => <DialogsContainer /> } />
-            <Route path='/feed' render={ () => <Feed />} />
-            <Route path='/music' render={ () => <Music /> } />
-            <Route path='/settings' render={ () => <Settings /> } />
-            <Route path='/login' render={ () => <LoginContainer /> } />
-            <Suspense fallback={<Loading color={'white'} />}>
-              <Switch>
-                <Route path='/users' render={ () => <UsersContainer /> } />
-                <Route path='/profile/:userId?' render={ () => <ProfileContainer /> } />
-
-              </Switch>
-            </Suspense>
+          <Suspense fallback={<Loading color={'white'} />}>
+          <Switch>
+          <Route path='/messages' render={ () => <DialogsContainer /> } />
+          <Route path='/feed' render={ () => <Feed />} />
+          <Route path='/music' render={ () => <Music /> } />
+          <Route path='/settings' render={ () => <Settings /> } />
+          <Route path='/login' render={ () => <LoginContainer /> } />
+            <Route path='/users' render={ () => <UsersContainer /> } />
+            <Route path='/profile/:userId?' render={ () => <ProfileContainer /> } />
+            <Route path='/' exact><Redirect to='/feed'/></Route>
+            <Route path="*" render={() => <div>404 NOT FOUND</div>} />
+          </Switch>
+          </Suspense>
           </div>
           <div className='footer'>
             <Footer />

@@ -4,7 +4,6 @@ import classes from './ProfileInfo.module.css';
 const Info = (props) => {
 
     let contacts = props.userPage.contacts;
-    console.log(props);
     return (
         <div>
             <div className={classes.aboutMe}>About me: </div>
