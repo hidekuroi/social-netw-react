@@ -1,15 +1,28 @@
 import React from 'react';
 import classes from './Paginator.module.css';
-
+import {UsersPropsType} from './Users'
 //Refactor all this shitty code later
 
-const Paginator = (props) => {
+type PropsType = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
 
-let changePage = (p) => {
+    onPageChange: (page: number) => void
+}
+
+
+
+const Paginator = (props: PropsType) => {
+
+let changePage = (p: number) => {
     props.onPageChange(p);
 }
 
-let pages = () => {
+type PagesType = () => ((string|number)[]|undefined)
+
+
+let pages: PagesType = () => {
         let endPages = [];
         let numberOfPages = Math.ceil(props.totalUsersCount / props.pageSize);
             if(props.currentPage <= 4){
@@ -40,9 +53,10 @@ let pages = () => {
         }
     } 
 
+
     return (
     <div>
-        {pages().map(p => {return (<span className={`${classes.pageNumber} 
+        {pages()!.map(p => {return (<span className={`${classes.pageNumber} 
             ${props.currentPage === p && classes.selected}`} onClick={() => {
             if(typeof(p) == 'number'){
             changePage(p)

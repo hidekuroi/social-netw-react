@@ -2,13 +2,16 @@ import React, {useEffect} from 'react';
 import Users from "./Users";
 import { changeCurrentPage, toggleLoading, requestUsers, followUser, unfollowUser} from '../../redux/usersReducer';
 import Loading from '../common/Loading';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { compose } from 'redux';
 import { getCurrentPage, isAuthCheck, getFollowingProgress, getIsLoading, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selector';
+import { RootState } from '../../redux/redux-store';
 
 let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
 
-const UsersContainer = (props) => {
+type PropsType = ConnectedProps<typeof container>
+
+const UsersContainer = (props: PropsType) => {
     
   useEffect(() => {
     props.requestUsers(props.pageSize);
@@ -19,29 +22,21 @@ const UsersContainer = (props) => {
   }, [])
 
 
-  const onPageChange = (page) => {
+  let onPageChange = (page: number): void => {
       props.changeCurrentPage(page);
       props.requestUsers(props.pageSize, page);
   }
 
+
+
     return <>
             {props.isLoading ? <Loading color={'white'}/> : null}
-           <Users users={props.users}
-                  currentPage={props.currentPage}
-                  changeCurrentPage={props.changeCurrentPage}
-                  onPageChange={onPageChange}
-                  totalUsersCount={props.totalUsersCount}
-                  pageSize={props.pageSize}
-                  profilePic={profilePic}
-                  followingProgress={props.followingProgress}
-                  followUser={props.followUser}
-                  unfollowUser={props.unfollowUser}
-                  isAuth={props.isAuth} />
+           <Users {...props} onPageChange={onPageChange} />
           </>
   
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: RootState) => {
   return {
     users: getUsers(state),
     pageSize: getPageSize(state),
@@ -54,7 +49,10 @@ let mapStateToProps = (state) => {
   }
 }
 
+let container = connect(mapStateToProps, { changeCurrentPage, toggleLoading, requestUsers, followUser, unfollowUser })
+
 export default compose(
   React.memo,
-  connect(mapStateToProps, { changeCurrentPage, toggleLoading, requestUsers, followUser, unfollowUser })
+  container
 )(UsersContainer);
+

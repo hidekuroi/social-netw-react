@@ -2,7 +2,17 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import classes from './User.module.css';
 
-const User = (props) => {
+type PropsType = {
+    profilePic: string
+    user: any
+    isAuth: boolean
+    followingProgress: Array<number>
+
+    followUser: (id: number) => void
+    unfollowUser: (id: number) => void
+}
+
+const User = (props: PropsType) => {
     let profilePic = props.profilePic;
     let u = props.user
     return (
