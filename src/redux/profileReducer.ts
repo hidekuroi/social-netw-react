@@ -1,5 +1,8 @@
+import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 import { profileAPI } from "../api/api";
 import { PhotosType, UserPageType, PostType } from "../types/types";
+import { RootState } from "./redux-store";
 
 //do not forget to add types for actions; and delete this "!"
 
@@ -29,7 +32,7 @@ let initialState: InitialStateType = {
 };
 
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     
     switch(action.type){
         case ADD_POST: {
@@ -69,11 +72,13 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
         case CHANGE_PHOTO: {
             if(state.userPage!.photos!.small === state.userPhoto){
                 let stateCopy = {...state, userPhoto: action.photos.small}
-                stateCopy.userPage!.photos = action.photos;
+            if(stateCopy.userPage){
+                stateCopy.userPage.photos = action.photos;
+            }
                 return stateCopy;
             }else {
                 let stateCopy = {...state, userPhoto: action.photos.large}
-                stateCopy.userPage!.photos = action.photos;
+                stateCopy.userPage!.photos = {...action.photos};
                 return stateCopy;
             }
         }
@@ -89,6 +94,11 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
     }
 
 }
+
+
+type ActionsTypes = AddPostType | SetStatusType | ChangePhotoSizeType | SetStatusType |
+    DeletePostType | ChangePhotoType | SetUserPageType 
+
 
 type AddPostType = {
     type: typeof ADD_POST,
@@ -111,7 +121,7 @@ type SetStatusType = {
     type: typeof SET_STATUS,
     status: string
 }
-export const setStatus = (status: string) => ({type: SET_STATUS, status});
+export const setStatus = (status: string): SetStatusType => ({type: SET_STATUS, status});
 
 type DeletePostType = {
     type: typeof DELETE_POST,
@@ -121,13 +131,16 @@ export const deletePost = (postId: number): DeletePostType => ({type: DELETE_POS
 
 type ChangePhotoType = {
     type: typeof CHANGE_PHOTO,
-    photos: PhotosType
+    photos: {small: string | null, large: string | null}
 }
-const changePhoto = (photos: PhotosType): ChangePhotoType => ({type: CHANGE_PHOTO, photos});
+const changePhoto = (photos: {small: string | null, large: string | null}): ChangePhotoType => ({type: CHANGE_PHOTO, photos});
 
 
-export const getProfile = (userId: number) => {
-    return async (dispatch: any) => {
+type DispatchType = Dispatch<ActionsTypes>
+type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionsTypes>
+
+export const getProfile = (userId: number): ThunkType => {
+    return async (dispatch: DispatchType) => {
         try{
         let data = await profileAPI.getProfile(userId);
         dispatch(setUserPage(data));
@@ -138,8 +151,9 @@ export const getProfile = (userId: number) => {
     }
 }
 
-export const getStatus = (userId: number) => {
-    return async (dispatch: any) => {
+
+export const getStatus = (userId: number): ThunkType => {
+    return async (dispatch: DispatchType) => {
         try{
         let data = await profileAPI.getStatus(userId);
             dispatch(setStatus(data));
@@ -149,8 +163,8 @@ export const getStatus = (userId: number) => {
     }
 }
 
-export const updateStatus = (status: string) => {
-    return async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType => {
+    return async (dispatch: DispatchType) => {
         let data = await profileAPI.updateStatus(status);
             if(data.resultCode === 0){
                 dispatch(setStatus(status));
@@ -158,16 +172,17 @@ export const updateStatus = (status: string) => {
     }
 }
 
-export const uploadPhoto = (file: any) => {
-    return async (dispatch: any) => {
+export const uploadPhoto = (file: any): ThunkType => {
+    return async (dispatch: DispatchType) => {
         let data = await profileAPI.uploadPhoto(file);
             if(data.data.resultCode === 0){
+                console.log(data.data)
                 dispatch(changePhoto(data.data.data.photos));
             }
     }
 }
 
-export const uploadInfo = (info: any) => {
+export const uploadInfo = (info: any): ThunkType => {
     return async (dispatch: any) => {
         let data = await profileAPI.uploadInfo(info);
             if(data.resultCode === 0){

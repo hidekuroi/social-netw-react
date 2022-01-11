@@ -1,3 +1,5 @@
+import { Dispatch } from "redux";
+
 const SEND_MESSAGE = '/messenger/SEND-MESSAGE';
 
 type MessageType = {
@@ -10,13 +12,12 @@ type DialogType = {
     name: string
 }
 
-type InitialStateType = {
+export type DialogsInitialStateType = {
     messagesData: Array<MessageType>,
     dialogsData: Array<DialogType>,
-    messengerInputField: string
 }
 
-let initialState: InitialStateType = {
+let initialState: DialogsInitialStateType = {
     messagesData: [
         {id: 1, message: 'Ты Евгений Цыганов?'},
         {id: 2, message: 'если да, пошёл нахуй'},
@@ -28,11 +29,10 @@ let initialState: InitialStateType = {
         {id: 3, name: 'Circ.lek'},
         {id: 4, name: 'Vasya Govnyuchenko'}
     ],
-    messengerInputField: ''
 };
 
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+const dialogsReducer = (state = initialState, action: any): DialogsInitialStateType => {
     switch(action.type){
         case SEND_MESSAGE: {
             console.log(action);
@@ -56,6 +56,7 @@ type SendMessageType = {
     type: typeof SEND_MESSAGE,
     messageData: {messengerInput: string}
 }
+
 
 export const sendMessage = (messageData: {messengerInput: string}): SendMessageType => ({type: SEND_MESSAGE, messageData});
 

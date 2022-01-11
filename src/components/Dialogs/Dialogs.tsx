@@ -2,9 +2,19 @@ import React from 'react';
 import Message from './Message/Message';
 import classes from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { DialogsInitialStateType } from '../../redux/dialogsReducer';
 
-const MessengerInputForm = (props) => {
+type PropsType = {
+    messengerData: DialogsInitialStateType,
+
+    sendMessage: (input: string) => void,
+    reset: (field: string) => void
+};
+
+
+const MessengerInputForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) => {
+    console.log(props)
     return(
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -21,7 +31,7 @@ const MessengerInputReduxForm = reduxForm({
     form: 'messenger'
 })(MessengerInputForm);
 
-const Dialogs = (props) => {
+const Dialogs = (props: PropsType) => {
 
     let dialogsData = props.messengerData.dialogsData;
 
@@ -34,7 +44,8 @@ const Dialogs = (props) => {
     let messages = messagesData
     .map(el => (<Message text={el.message} id={el.id} />));
 
-    const onSendMessage = (formData) => {
+    const onSendMessage = (formData: any) => {
+        console.log(formData)
         props.sendMessage(formData);
         props.reset('messenger');
     };

@@ -1,7 +1,7 @@
 import React from 'react'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 
-function Feed(props) {
+function Feed(props: any) {
     return (
         <div>
             feed
