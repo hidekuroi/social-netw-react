@@ -3,8 +3,15 @@ import classes from './Navbar.module.css';
 import RecentDialogs from './RecentDialogs/RecentDialogs';
 import Menu from './Menu/Menu';
 import {Route} from 'react-router-dom';
+import { AuthInitialStateType } from '../../redux/authReducer';
+import { DialogType } from '../../redux/dialogsReducer';
 
-const Navbar = (props) => {
+type PropsType = {
+  auth: AuthInitialStateType,
+  dialogsData: Array<DialogType>
+}
+
+const Navbar = (props: PropsType) => {
 
   let recentDialogs = () => {
     return(

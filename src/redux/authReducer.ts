@@ -8,7 +8,7 @@ import { RootState } from "./redux-store";
 const SET_AUTH_USER = '/auth/SET-AUTH-USER';
 const SET_CAPTCHA_URL = '/auth/SET-CAPTCHA-URL'
 
-type InitialStateType = {
+export type AuthInitialStateType = {
     id: number | null,
     login: string | null,
     email: string | null,
@@ -16,7 +16,7 @@ type InitialStateType = {
     captchaUrl: string | null
 }
 
-const initialState: InitialStateType = {
+const initialState: AuthInitialStateType = {
         id: null,
         login: null,
         email: null,
@@ -24,7 +24,7 @@ const initialState: InitialStateType = {
         captchaUrl: null
 }
 
-export default (state = initialState, action: any): InitialStateType => {
+export default (state = initialState, action: any): AuthInitialStateType => {
     switch (action.type) {
 
     case SET_AUTH_USER:
@@ -81,7 +81,14 @@ export const authCheck = (): ThunkType => {
     }
 }
 
-export const signIn = (formData: any): ThunkType => {
+export type signInData = {
+    email: string,
+    password: string,
+    rememberMe: boolean | null,
+    captcha: string | null
+}
+
+export const signIn = (formData: signInData): ThunkType => {
     return async (dispatch: any) => {
         let data = await authAPI.login(formData);
             if(data.resultCode === ResultCodeForCaptcha.Success){

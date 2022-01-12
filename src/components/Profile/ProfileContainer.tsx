@@ -1,11 +1,22 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { setUserPage, changePhotoSize, getProfile, getStatus, updateStatus, uploadPhoto, uploadInfo } from '../../redux/profileReducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { RootState } from '../../redux/redux-store';
 
-const ProfileContainer = (props) => {
+//FIX LATER; MATCH AND HISTORY TYPES
+
+export type PrPropsType = ConnectedProps<typeof container>
+
+export interface ProfilePropsType extends PrPropsType {
+    match: any,
+    history: any
+}
+
+
+const ProfileContainer = (props: ProfilePropsType) => {
 
     useEffect(() => {
         let userId = props.match.params.userId;
@@ -28,17 +39,19 @@ const ProfileContainer = (props) => {
     }
 
 
-let mapStateToProps = (state) => ({
+let mapStateToProps = (state: RootState) => ({
     userPage: state.profile.userPage,
     userPhoto: state.profile.userPhoto,
     status: state.profile.status,
     auth: state.auth
 });
 
+let container = connect(mapStateToProps,{setUserPage, changePhotoSize, getProfile,
+    getStatus, updateStatus, uploadPhoto, uploadInfo})
+
 
 export default compose(
-    connect(mapStateToProps,{setUserPage, changePhotoSize, getProfile,
-                             getStatus, updateStatus, uploadPhoto, uploadInfo}),
+    container,
     withRouter,
 )(ProfileContainer);
 

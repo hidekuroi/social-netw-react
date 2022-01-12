@@ -12,7 +12,6 @@ type PropsType = {
     reset: (field: string) => void
 };
 
-
 const MessengerInputForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) => {
     console.log(props)
     return(
@@ -27,7 +26,7 @@ const MessengerInputForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) 
     );
 }
 
-const MessengerInputReduxForm = reduxForm({
+const MessengerInputReduxForm = reduxForm<{}, {}>({
     form: 'messenger'
 })(MessengerInputForm);
 

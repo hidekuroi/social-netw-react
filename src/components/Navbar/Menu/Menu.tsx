@@ -2,7 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './Menu.module.css';
 
-const Menu = (props) => {
+type PropsType = {
+  isAuth: boolean | null
+}
+
+const Menu = (props: PropsType) => {
   if(props.isAuth){
     return(
         <nav className={classes.nav}>

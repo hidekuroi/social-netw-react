@@ -4,8 +4,13 @@ import Info from './Info';
 import classes from './ProfileInfo.module.css';
 import ProfileStatus from './ProifleStatus';
 import EditInfoForm from './EditInfoForm';
+import { ProfilePropsType } from '../ProfileContainer';
 
-const ProfileInfo = (props) => {
+type PropsType = {
+    userPageData: ProfilePropsType,
+}
+
+const ProfileInfo = (props: PropsType) => {
 
     let [editMode, setEditMode] = useState(false);
 
@@ -27,7 +32,7 @@ const ProfileInfo = (props) => {
         props.userPageData.changePhotoSize();
     }
 
-    let uploadPhoto = (e) => {
+    let uploadPhoto = (e: any) => {
         if (e.target.files.length){
             props.userPageData.uploadPhoto(e.target.files[0]);
         }
@@ -38,8 +43,8 @@ const ProfileInfo = (props) => {
         setEditMode(true);
     }
 
-    let updateInfo = (formData) => {
-        props.uploadInfo(formData);
+    let updateInfo = (formData: any) => {
+        props.userPageData.uploadInfo(formData);
         setEditMode(false);
     }
 
@@ -49,9 +54,9 @@ const ProfileInfo = (props) => {
         <div>
             <img className={classes.wallpaper} src="https://img5.goodfon.ru/original/1600x900/6/71/peizazh-kholmy-minimalizm.jpg" alt="breaps"/>
             <div className={classes.profilePicture}>
-                <img src={props.userPageData.userPhoto ? props.userPageData.userPhoto : spot} className={!props.userPageData.userPhoto ? classes.small : null} onClick={changePhotoSize} alt="profpiclarge" />
+                <img src={props.userPageData.userPhoto ? props.userPageData.userPhoto : spot} className={!props.userPageData.userPhoto ? classes.small : undefined} onClick={changePhotoSize} alt="profpiclarge" />
                 {props.userPageData.userPage.userId === props.userPageData.auth.id && <div>
-                    <label for="profilepic">{`Choose a profile picture: `}</label>
+                    <label>{`Choose a profile picture: `}</label>
                     <input type="file" id="profilepic" onChange={uploadPhoto}/>
                 </div>}
             </div>

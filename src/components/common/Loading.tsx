@@ -3,7 +3,11 @@ import Loader from 'react-loader-spinner';
 import './Loading.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-const Loading = (props) => {
+type PropsType = {
+    color: string
+}
+
+const Loading = (props: PropsType) => {
     return (
         <div className='loader'>
             <Loader

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { url } from '../../utils/validators';
-import { Input } from './../../common/FormControls';
+import { Input } from '../../common/FormControls';
 
 
-const EditInfoForm = (props) => {
+const EditInfoForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
                 <div>
@@ -42,7 +42,7 @@ const EditInfoForm = (props) => {
     );
 }
 
-const EditInfoFormRedux = reduxForm({
+const EditInfoFormRedux = reduxForm<{}, {}>({
     form: 'edit-info'
 })(EditInfoForm);
 

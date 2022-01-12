@@ -2,8 +2,15 @@ import React from 'react';
 import classes from './Signout.module.css';
 import { NavLink } from 'react-router-dom';
 
+type PropsType = {
+    login: string
 
-let Signout = (props) => {
+    signOut: () => void
+    getProfile: (id: number) => void
+} 
+
+
+let Signout = (props: PropsType) => {
     
     return (
         <div>

@@ -2,11 +2,14 @@ import React from 'react';
 import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer'
+import { ProfilePropsType } from './ProfileContainer';
 
-const Profile = (props) => {
+type PropsType = ProfilePropsType
+
+const Profile = (props: PropsType) => {
   return(
     <div className={classes.content}>
-      <ProfileInfo userPageData={props} uploadInfo={props.uploadInfo}/>
+      <ProfileInfo userPageData={props}/>
       <MyPostsContainer />
     </div>
   );

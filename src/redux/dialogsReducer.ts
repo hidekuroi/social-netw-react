@@ -7,7 +7,7 @@ type MessageType = {
     message: string
 }
 
-type DialogType = {
+export type DialogType = {
     id: number,
     name: string
 }

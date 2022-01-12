@@ -1,7 +1,13 @@
 import React from 'react';
 import classes from './Post.module.css';
 
-const Post = (inf) => {
+type PropsType = {
+  userPhoto: string | null,
+  message: string,
+  id: number
+}
+
+const Post = (inf: PropsType) => {
   let spot = 'https://wiki-vk.ru/s/001/512/41.png';
     return(
           <div className={classes.item}>

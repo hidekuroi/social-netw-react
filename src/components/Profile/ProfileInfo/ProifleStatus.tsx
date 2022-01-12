@@ -1,6 +1,14 @@
 import React, {useState, useEffect} from 'react';
 
-const ProifleStatus = (props) => {
+type PropsType = {
+    authId: number | null,
+    status: string,
+    pageId: number
+
+    updateStatus: (status: string) => void
+}
+
+const ProifleStatus = (props: PropsType) => {
 
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status);
@@ -16,7 +24,7 @@ const ProifleStatus = (props) => {
         props.updateStatus(status);
     }
 
-    const changeText = (e) => {
+    const changeText = (e: any) => {
         let text = e.target.value;
         setStatus(text);
     }

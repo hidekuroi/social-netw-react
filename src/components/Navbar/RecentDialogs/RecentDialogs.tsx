@@ -1,9 +1,13 @@
 import React from 'react';
 import classes from './RecentDialogs.module.css';
 import RecDialogItem from './RecDialogItem/RecDialogItem';
+import { DialogType } from '../../../redux/dialogsReducer';
 
+type PropsType = {
+  recentDialogs: Array<DialogType>
+}
 
-const RecentDialogs = (props) =>{
+const RecentDialogs = (props: PropsType) =>{
     
     let dialogs = props.recentDialogs;
 

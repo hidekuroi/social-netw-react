@@ -14,7 +14,7 @@ export type ContactsType = {
     twitter: string | null,
     instagram: string | null,
     youtube: string | null,
-    githun: string | null,
+    github: string | null,
     mainLink: string | null,
 }
 export type UserPageType = {

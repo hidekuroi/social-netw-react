@@ -1,9 +1,18 @@
 import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { PostType } from '../../../types/types';
 
-const AddPostForm = (props) => {
+type PropsType = {
+  postsData: Array<PostType>,
+  userPhoto: string | null,
+
+  addPost: (formData: any) => void,
+  reset: (form: string) => void
+}
+
+const AddPostForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) => {
        return( 
           <form className={classes.addpost} onSubmit={props.handleSubmit}>
             <div>
@@ -16,11 +25,11 @@ const AddPostForm = (props) => {
        );
 }
 
-const AddPostReduxForm = reduxForm({
+const AddPostReduxForm = reduxForm<{}, {}>({
   form: 'addPostForm'
 })(AddPostForm);
 
-const MyPosts = (props) => {
+const MyPosts = (props: PropsType) => {
 
 
   let postsData = props.postsData;
@@ -28,7 +37,7 @@ const MyPosts = (props) => {
   let posts = postsData
   .map(el => (<Post userPhoto={props.userPhoto} message={el.text} id={el.id} />));
 
-    let onAddPost = (formData) => {
+    let onAddPost = (formData: any) => {
         props.addPost(formData);
         props.reset('addPostForm');
     }

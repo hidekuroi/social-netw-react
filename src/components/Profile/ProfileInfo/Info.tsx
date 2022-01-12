@@ -1,7 +1,12 @@
 import React from 'react';
+import { UserPageType } from '../../../types/types';
 import classes from './ProfileInfo.module.css';
 
-const Info = (props) => {
+type PropsType = {
+    userPage: UserPageType
+}
+
+const Info = (props: PropsType) => {
 
     let contacts = props.userPage.contacts;
     return (
