@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { setUserPage, changePhotoSize, getProfile, getStatus, updateStatus, uploadPhoto, uploadInfo } from '../../redux/profileReducer';
+import { actions } from '../../redux/profileReducer';
+import { getProfile, getStatus, updateStatus, uploadPhoto, uploadInfo } from '../../redux/profileReducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { RootState } from '../../redux/redux-store';
 
 //FIX LATER; MATCH AND HISTORY TYPES
+
+const setUserPage = actions.setUserPage
+const changePhotoSize = actions.changePhotoSize
 
 export type PrPropsType = ConnectedProps<typeof container>
 

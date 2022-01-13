@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import { setAuthUser, authCheck, signOut, AuthInitialStateType } from '../../redux/authReducer';
+import { authCheck, signOut, AuthInitialStateType } from '../../redux/authReducer';
+import { actions } from '../../redux/authReducer';
 import { getProfile } from '../../redux/profileReducer';
 import { RootState } from '../../redux/redux-store';
+
+const setAuthUser = actions.setAuthUser
 
 type PropsType = {
     authData: AuthInitialStateType,

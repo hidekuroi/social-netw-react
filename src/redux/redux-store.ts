@@ -23,6 +23,9 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
+type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
+export type InferActionsType<T extends {[key: string]: (...args: any[])=>any}> = ReturnType<PropertiesTypes<T>>
+
 
 
 

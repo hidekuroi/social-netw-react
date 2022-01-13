@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { profileAPI } from "../api/api";
 import { PhotosType, UserPageType, PostType } from "../types/types";
-import { RootState } from "./redux-store";
+import { InferActionsType, RootState } from "./redux-store";
 
 //do not forget to add types for actions; and delete this "!"
 
@@ -96,44 +96,16 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
 }
 
 
-type ActionsTypes = AddPostType | SetStatusType | ChangePhotoSizeType | SetStatusType |
-    DeletePostType | ChangePhotoType | SetUserPageType 
+type ActionsTypes = InferActionsType<typeof actions>
 
-
-type AddPostType = {
-    type: typeof ADD_POST,
-    postText: string
-}
-export const addPost = (postData: any): AddPostType => ({type: ADD_POST, postText: postData.addPostField});
-
-type SetUserPageType = {
-    type: typeof SET_USER_PAGE,
-    userData: UserPageType
-}
-export const setUserPage = (userData: UserPageType): SetUserPageType => ({type: SET_USER_PAGE, userData});
-
-type ChangePhotoSizeType = {
-    type: typeof CHANGE_PHOTO_SIZE
-}
-export const changePhotoSize = (): ChangePhotoSizeType => ({type: CHANGE_PHOTO_SIZE});
-
-type SetStatusType = {
-    type: typeof SET_STATUS,
-    status: string
-}
-export const setStatus = (status: string): SetStatusType => ({type: SET_STATUS, status});
-
-type DeletePostType = {
-    type: typeof DELETE_POST,
-    postId: number
-}
-export const deletePost = (postId: number): DeletePostType => ({type: DELETE_POST, postId});
-
-type ChangePhotoType = {
-    type: typeof CHANGE_PHOTO,
-    photos: {small: string | null, large: string | null}
-}
-const changePhoto = (photos: {small: string | null, large: string | null}): ChangePhotoType => ({type: CHANGE_PHOTO, photos});
+export const actions = {
+    addPost: (postData: any) => ({type: ADD_POST, postText: postData.addPostField} as const),
+    setUserPage: (userData: UserPageType) => ({type: SET_USER_PAGE, userData} as const),
+    changePhotoSize: () => ({type: CHANGE_PHOTO_SIZE} as const),
+    setStatus: (status: string) => ({type: SET_STATUS, status} as const),
+    deletePost: (postId: number) => ({type: DELETE_POST, postId} as const),
+    changePhoto: (photos: {small: string | null, large: string | null}) => ({type: CHANGE_PHOTO, photos} as const)
+} 
 
 
 type DispatchType = Dispatch<ActionsTypes>
@@ -143,7 +115,7 @@ export const getProfile = (userId: number): ThunkType => {
     return async (dispatch: DispatchType) => {
         try{
         let data = await profileAPI.getProfile(userId);
-        dispatch(setUserPage(data));
+        dispatch(actions.setUserPage(data));
         }
         catch{
             console.error('You are not signed in')
@@ -156,7 +128,7 @@ export const getStatus = (userId: number): ThunkType => {
     return async (dispatch: DispatchType) => {
         try{
         let data = await profileAPI.getStatus(userId);
-            dispatch(setStatus(data));
+            dispatch(actions.setStatus(data));
         }catch{
             console.error('You are not signed in')
         }
@@ -167,7 +139,7 @@ export const updateStatus = (status: string): ThunkType => {
     return async (dispatch: DispatchType) => {
         let data = await profileAPI.updateStatus(status);
             if(data.resultCode === 0){
-                dispatch(setStatus(status));
+                dispatch(actions.setStatus(status));
             }
     }
 }
@@ -177,7 +149,7 @@ export const uploadPhoto = (file: any): ThunkType => {
         let data = await profileAPI.uploadPhoto(file);
             if(data.data.resultCode === 0){
                 console.log(data.data)
-                dispatch(changePhoto(data.data.data.photos));
+                dispatch(actions.changePhoto(data.data.data.photos));
             }
     }
 }

@@ -1,11 +1,15 @@
 import React, {useEffect} from 'react';
 import Users from "./Users";
-import { changeCurrentPage, toggleLoading, requestUsers, followUser, unfollowUser} from '../../redux/usersReducer';
+import { requestUsers, followUser, unfollowUser} from '../../redux/usersReducer';
+import { actions } from '../../redux/usersReducer';
 import Loading from '../common/Loading';
 import { connect, ConnectedProps } from 'react-redux';
 import { compose } from 'redux';
 import { getCurrentPage, isAuthCheck, getFollowingProgress, getIsLoading, getPageSize, getTotalUsersCount, getUsers } from '../../redux/users-selector';
 import { RootState } from '../../redux/redux-store';
+
+const changeCurrentPage = actions.changeCurrentPage
+const toggleLoading = actions.toggleLoading
 
 let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
 

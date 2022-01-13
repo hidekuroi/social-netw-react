@@ -1,10 +1,11 @@
 import React from 'react';
 import MyPosts from './MyPosts';
-import { addPost } from '../../../redux/profileReducer';
+import { actions } from '../../../redux/profileReducer';
 import { connect } from 'react-redux';
 import { reset } from 'redux-form';
 import { RootState } from '../../../redux/redux-store';
 
+const addPost = actions.addPost
 
 let mapStateToProps = (state: RootState) => {
   return {

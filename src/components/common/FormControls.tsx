@@ -1,8 +1,11 @@
 import React from 'react'
 import classes from './FormControls.module.css';
 
-export let Input = ({input, meta, ...props}) => {
 
+
+export let Input = ({input, meta, ...props}: any) => {
+
+    
     let hasError = meta.touched && meta.error;
     return (
         <div>
