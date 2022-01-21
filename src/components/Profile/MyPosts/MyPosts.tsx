@@ -3,6 +3,7 @@ import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { PostType } from '../../../types/types';
+import Button from '@mui/material/Button';
 
 type PropsType = {
   postsData: Array<PostType>,
@@ -19,7 +20,7 @@ const AddPostForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) => {
                 <Field name="addPostField" type="text" component="textarea"/>
             </div>
             <div>
-                <button>Add post</button>
+                <Button variant="contained" type='submit'>Add post</Button>
             </div>
           </form>
        );

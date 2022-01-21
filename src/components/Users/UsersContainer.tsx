@@ -34,7 +34,7 @@ const UsersContainer = (props: PropsType) => {
 
 
     return <>
-            {props.isLoading ? <Loading color={'white'}/> : null}
+            {props.isLoading ? <Loading color={'gray'}/> : null}
            <Users {...props} onPageChange={onPageChange} />
           </>
   

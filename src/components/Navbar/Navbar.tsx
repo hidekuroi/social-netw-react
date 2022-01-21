@@ -22,11 +22,11 @@ const Navbar = (props: PropsType) => {
     return(
       <div>
         <Menu isAuth={props.auth.isAuth} />
-        <Route path='/profile' render={recentDialogs} />
+        {/* <Route path='/profile' render={recentDialogs} />
         <Route path='/feed' render={recentDialogs} />
         <Route path='/settings' render={recentDialogs} />
         <Route path='/users' render={recentDialogs} />
-        <Route path='/music' render={recentDialogs } />
+        <Route path='/music' render={recentDialogs } /> */}
       </div>
     );
   }

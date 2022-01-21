@@ -13,6 +13,12 @@ import { compose } from 'redux';
 import { initializeApp } from './redux/appReducer';
 import Loading from './components/common/Loading';
 import Feed from './components/Feed/Feed';
+import Button from '@mui/material/Button';
+
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
@@ -22,7 +28,8 @@ const App = (props) => {
 
   useEffect(() => {
     const errorCaught = (reason, promise) => {
-      alert('Some error occured');
+      console.log('reason');
+      console.log(reason);
     }
     function subscribeErrorsHandler() {
       window.addEventListener('unhandledrejection', errorCaught);
@@ -45,28 +52,44 @@ const App = (props) => {
     else{
       return (
         <body className={props.app.darkTheme ? 'darkTheme' : null}>
-        <div className="app-wrapper puk">
-          <HeaderContainer className='header'/>
-          <NavbarContainer className='navbar'/>        
-          <div className='app-wrapper-content'>
-          <Suspense fallback={<Loading color={'white'} />}>
-          <Switch>
-          <Route path='/messages' render={ () => <DialogsContainer /> } />
-          <Route path='/feed' render={ () => <Feed />} />
-          <Route path='/music' render={ () => <Music /> } />
-          <Route path='/settings' render={ () => <Settings /> } />
-          <Route path='/login' render={ () => <LoginContainer /> } />
-            <Route path='/users' render={ () => <UsersContainer /> } />
-            <Route path='/profile/:userId?' render={ () => <ProfileContainer /> } />
-            <Route path='/' exact><Redirect to='/feed'/></Route>
-            <Route path="*" render={() => <div>404 NOT FOUND</div>} />
-          </Switch>
-          </Suspense>
-          </div>
-          <div className='footer'>
+          <Box sx={{ flexGrow: 1, width: '1200px',
+  minHeight: '100vh',
+  margin: '0 auto'  }}>
+      <Grid container spacing={2}>
+        <Grid item  md={12}>
+          <HeaderContainer id="header" className='header'/>
+        </Grid>
+        <Grid item  md={2}>
+          <NavbarContainer className='navbar'/>
+        </Grid>
+        
+        <Grid item  md={10}>
+          
+            <Suspense fallback={<Loading color={'white'} />}>
+            <Switch>
+            <Route path='/messages' render={ () => <DialogsContainer /> } />
+            <Route path='/feed' render={ () => <Feed />} />
+            <Route path='/music' render={ () => <Music /> } />
+            <Route path='/settings' render={ () => <Settings /> } />
+            <Route path='/login' render={ () => <LoginContainer /> } />
+              <Route path='/users' render={ () => <UsersContainer /> } />
+              <Route path='/profile/:userId?' render={ () => <ProfileContainer /> } />
+              <Route path='/' exact><Redirect to='/feed'/></Route>
+              <Route path="*" render={() => <div><Button variant="contained">SEMEN RETENTION</Button></div>} />
+            </Switch>
+            </Suspense>
+          
+        </Grid>
+        <Grid item  md={12}>
+        <div className='footer'>
             <Footer />
           </div>
-        </div>
+        </Grid>
+      </Grid>
+      
+    </Box>
+        
+
       </body>
     );
     }

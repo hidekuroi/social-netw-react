@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 let mapStateToProps = (state: RootState) => {
   return {
     dialogsData: state.messenger.dialogsData,
-    auth: state.auth
+    auth: state.auth,
   }
 }
 

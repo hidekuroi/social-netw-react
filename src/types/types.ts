@@ -1,6 +1,6 @@
 export type PhotosType = {
-    small: string | null,
-    large: string | null
+    small: string | 'https://wiki-vk.ru/s/001/512/41.png',
+    large: string | 'https://wiki-vk.ru/s/001/512/41.png'
 }
 export type PostType = {
     id: number,
@@ -18,10 +18,10 @@ export type ContactsType = {
     mainLink: string | null,
 }
 export type UserPageType = {
-    aboutMe: string | null,
+    aboutMe: string,
     contacts: ContactsType,
     lookingForAJob: boolean,
-    lookingForAJobDescription: string | null,
+    lookingForAJobDescription: string,
     fullName: string,
     userId: number,
     photos: PhotosType

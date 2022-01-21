@@ -1,3 +1,4 @@
+import { getProfile } from './profileReducer';
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { authCheck } from "./authReducer";
@@ -56,5 +57,6 @@ export const initializeApp = () => {
         .then(() => {
             dispatch(setInitialized());
         });
+        
     }
 }

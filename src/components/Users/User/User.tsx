@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import classes from './User.module.css';
@@ -26,14 +27,16 @@ const User = (props: PropsType) => {
                 <div>
                    {props.isAuth ? 
                         u.followed
-                            ? <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
+                            ? <Button size='medium' color='error' disabled={props.followingProgress.some(id => id === u.id)} 
+                            variant="text" onClick={() => {
                                 props.unfollowUser(u.id);
-
-                            }}>Unfollow</button>
-                            : <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
-
+                                
+                            }}>Unfollow</Button>
+                            : <Button size='medium' color='primary' disabled={props.followingProgress.some(id => id === u.id)} 
+                            variant="text" onClick={() => {
                                 props.followUser(u.id);
-                            }}>Follow</button>
+                                
+                            }}>Follow</Button>
                             : <span></span>
                     }
                 </div>

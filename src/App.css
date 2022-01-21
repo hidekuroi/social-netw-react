@@ -7,25 +7,27 @@ body{
   background-color: #232324;
 }
 
-.app-wrapper{
+/* .app-wrapper{
   display: grid;
   width: 1200px;
   min-height: 100vh;
-  margin: 0 auto;
+  margin: 0 auto; 
   grid-template-areas: 
   "h h"
   "n c"
   "n f";
 
-  grid-template-rows: 50px 1fr auto;
-  grid-auto-columns: 2fr 10fr ;
-  grid-gap: 5px;
+   grid-template-rows: 50px 1fr auto;
+  grid-auto-columns: 2fr 10fr ; 
+   grid-gap: 5px; 
+} */
+
+#header{
+  display: flexbox
 }
 
-
-
 .app-wrapper > .header{
-  grid-area: h;
+  display: flexbox
 }
 
 .app-wrapper > .navbar{

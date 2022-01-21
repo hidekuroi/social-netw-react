@@ -1,3 +1,5 @@
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
 import React from 'react';
 import classes from './Paginator.module.css';
 import {UsersPropsType} from './Users'
@@ -20,11 +22,11 @@ let changePage = (p: number) => {
 }
 
 type PagesType = () => ((string|number)[]|undefined)
+let numberOfPages = Math.ceil(props.totalUsersCount / props.pageSize);
 
 
 let pages: PagesType = () => {
         let endPages = [];
-        let numberOfPages = Math.ceil(props.totalUsersCount / props.pageSize);
             if(props.currentPage <= 4){
             for(let i=1;i<=6;i++){
                 endPages.push(i);  
@@ -53,6 +55,11 @@ let pages: PagesType = () => {
         }
     } 
 
+    // const paginationRef = React.createRef();
+
+    // const changePageMui = () => {
+    //     console.log(paginationRef.current)
+    // }
 
     return (
     <div>
@@ -62,6 +69,14 @@ let pages: PagesType = () => {
             changePage(p)
             }
         }}>{p}</span>)})}
+
+        {/* <Pagination count={numberOfPages} page={props.currentPage} ref={paginationRef}
+        renderItem={(item) => (
+            <PaginationItem
+              {...item}
+            />
+          )}
+         defaultPage={1} onClick={changePageMui} />  */}
     </div>
     );
 }

@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { profileAPI } from "../api/api";
-import { PhotosType, UserPageType, PostType } from "../types/types";
+import { profileAPI } from "../api/profile-api";
+import { UserPageType, PostType } from "../types/types";
 import { InferActionsType, RootState } from "./redux-store";
 
 //do not forget to add types for actions; and delete this "!"
@@ -16,7 +16,7 @@ const CHANGE_PHOTO = '/profile/CHANGE-PHOTO';
 
 type InitialStateType = {
     postsData: Array<PostType>,
-    userPage: UserPageType | null,
+    userPage: UserPageType,
     userPhoto: string | null,
     status: string
 }
@@ -26,10 +26,29 @@ let initialState: InitialStateType = {
             {id:1, text:'breaps, i love dicks', likesCount:228},
             {id:2, text:'lets celebrate and suck some dick', likesCount:1488}
         ],
-        userPage: null,
-        userPhoto: null,
         status: '',
+        userPage: {aboutMe: '',
+            contacts: {facebook: '',
+            website: '',
+            vk: '',
+            twitter: '',
+            instagram: '',
+            youtube: '',
+            github: '',
+            mainLink: '',}
+            ,
+            lookingForAJob: false,
+            lookingForAJobDescription: '',
+            fullName: '',
+            userId: 0,
+            photos: {
+                small: '',
+                large: ''
+            }},
+        userPhoto: null,
+
 };
+
 
 
 const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
@@ -58,6 +77,8 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
             let stateCopy = {...state, userPage: action.userData, userPhoto: action.userData.photos.small};
             return stateCopy;
         }
+
+        
 
         case CHANGE_PHOTO_SIZE: {
                 if(state.userPage!.photos.small === state.userPhoto) {
@@ -95,7 +116,6 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
 
 }
 
-
 type ActionsTypes = InferActionsType<typeof actions>
 
 export const actions = {
@@ -104,14 +124,14 @@ export const actions = {
     changePhotoSize: () => ({type: CHANGE_PHOTO_SIZE} as const),
     setStatus: (status: string) => ({type: SET_STATUS, status} as const),
     deletePost: (postId: number) => ({type: DELETE_POST, postId} as const),
-    changePhoto: (photos: {small: string | null, large: string | null}) => ({type: CHANGE_PHOTO, photos} as const)
+    changePhoto: (photos: {small: string | 'https://wiki-vk.ru/s/001/512/41.png', large: string | 'https://wiki-vk.ru/s/001/512/41.png'}) => ({type: CHANGE_PHOTO, photos} as const)
 } 
 
 
 type DispatchType = Dispatch<ActionsTypes>
 type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionsTypes>
 
-export const getProfile = (userId: number): ThunkType => {
+export const getProfile = (userId: number ): ThunkType => {
     return async (dispatch: DispatchType) => {
         try{
         let data = await profileAPI.getProfile(userId);
