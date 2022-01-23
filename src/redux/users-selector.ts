@@ -28,3 +28,7 @@ export const isAuthCheck = (state: RootState) => {
     return state.auth.isAuth;
 }
 
+export const getFilter = (state: RootState) => {
+    return state.usersPage.filter
+}
+

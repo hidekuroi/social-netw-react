@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { usersAPI } from '../api/users-api';
-import { UserType } from './../types/types';
+import { UserType, FilterType } from './../types/types';
 import { InferActionsType, RootState } from './redux-store';
 
 const TOGGLE_FOLLOW = '/usersPage/TOGGLE-FOLLOW';
@@ -9,7 +9,8 @@ const SET_USERS = '/usersPage/SET-USERS';
 const SET_USERS_COUNT = '/usersPage/SET-USERS-COUNT';
 const CHANGE_CURRENT_PAGE = '/usersPage/CHANGE-CURRENT-PAGE';
 const TOGGLE_LOADING = '/usersPage/TOGGLE-LOADING';
-const ADD_FOLLOWING_USER = '/usersPage/ADD_FOLLOWING_USER';
+const ADD_FOLLOWING_USER = '/usersPage/ADD-FOLLOWING-USER';
+const SET_FILTER = '/usersPage/SET-FILTER'
 
 
 type InitialStateType = {
@@ -18,7 +19,8 @@ type InitialStateType = {
     totalUsersCount: number,
     pageSize: number,
     currentPage: number,
-    isLoading: boolean
+    isLoading: boolean,
+    filter: FilterType
 }
 
 let initialState: InitialStateType = {
@@ -32,7 +34,11 @@ let initialState: InitialStateType = {
         totalUsersCount: 0,
         pageSize: 20,
         currentPage: 1,
-        isLoading: false
+        isLoading: false,
+        filter: {
+            term: '',
+            friend: null
+        }
 };
 
 
@@ -73,6 +79,9 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
                  : state.followingProgress.filter(id => id !== action.userId)
           }
         }
+        case SET_FILTER: {
+            return {...state, filter: action.filter}
+        }
 
         default: {
             return state;
@@ -90,21 +99,29 @@ export const actions = {
     setUsersCount: (count: number) => ({type: SET_USERS_COUNT, count} as const),
     changeCurrentPage: (page: number) => ({type: CHANGE_CURRENT_PAGE, page} as const),
     toggleLoading: () => ({type: TOGGLE_LOADING} as const),
-    addFollowingUser: (isFollowingInProgress: boolean, userId: number) => ({type: ADD_FOLLOWING_USER, isFollowingInProgress, userId} as const)
+    addFollowingUser: (isFollowingInProgress: boolean, userId: number) => ({type: ADD_FOLLOWING_USER, isFollowingInProgress, userId} as const),
+    setFilter: (filter: FilterType) => ({type: SET_FILTER, filter} as const)
 }
 
 type DispatchType = Dispatch<ActionsTypes>
 type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionsTypes>
 
-export const requestUsers = (pageSize: number, page = 1): ThunkType => {   
+export const requestUsers = (pageSize: number, page = 1, filter: FilterType): ThunkType => {   
    return async (dispatch: DispatchType) => {
     dispatch(actions.toggleLoading());
-     let data = await usersAPI.getUsers(pageSize, page);
+     let data = await usersAPI.getUsers(pageSize, page, filter );
         dispatch(actions.setUsers(data.items));
         dispatch(actions.setUsersCount(data.totalCount));
         dispatch(actions.toggleLoading());
    }
 
+}
+
+export const requestUsersWithFilters = (pageSize: number, page = 1, filter: FilterType): ThunkType => {
+    return async (dispatch: any) => {
+        dispatch(actions.setFilter(filter))
+        dispatch(requestUsers(pageSize, 1, filter));
+    }
 }
 
 const followFlow = async (dispatch: DispatchType, apiMethod: Function, userId: number) => {

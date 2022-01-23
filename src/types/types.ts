@@ -36,3 +36,8 @@ export type UserType = {
     status: string | null,
     followed: boolean
 }
+
+export type FilterType = {
+    term: string,
+    friend: null | boolean
+}

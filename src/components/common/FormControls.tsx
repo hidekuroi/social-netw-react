@@ -1,8 +1,8 @@
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
+import { useFormik } from 'formik';
 import React from 'react'
-import classes from './FormControls.module.css';
 
 
 export let Input = ({input, meta, ...props}: any) => {
@@ -12,11 +12,11 @@ export let Input = ({input, meta, ...props}: any) => {
     return (
         <div>
             <TextField sx={{marginBottom: '10px', marginTop: '7px'}}
-          error={hasError}
+        error={hasError}
           label={props.label}
           type="text"
           autoComplete='off'
-          helperText={hasError && meta.error}
+        helperText={hasError && meta.error}
           {...input}
           {...props}
         />
@@ -62,6 +62,22 @@ export let PasswordInput = ({input, meta, ...props}: any) => {
         />
         </div>
     );
+}
+
+export let FilterInput = ({input, meta, ...props}: any) => {
+
+    return (
+        <div>
+            <TextField sx={{marginBottom: '10px', marginTop: '7px'}}
+          label={props.label}
+          type="text"
+          autoComplete='off'
+          {...input}
+          {...props}
+        />
+        </div>
+        
+    )
 }
 
 export let CheckboxInput = ({input, meta, ...props}: any) => {
