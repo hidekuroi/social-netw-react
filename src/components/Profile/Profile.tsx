@@ -2,14 +2,16 @@ import React from 'react';
 import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer'
-import { ProfilePropsType } from './ProfileContainer';
 
-type PropsType = ProfilePropsType
+
+type PropsType = {
+  auth: any,
+}
 
 const Profile = (props: PropsType) => {
   return(
     <div className={classes.content}>
-      <ProfileInfo userPageData={props}/>
+      <ProfileInfo auth={props.auth} />
       <MyPostsContainer />
     </div>
   );

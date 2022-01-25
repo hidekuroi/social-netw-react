@@ -1,17 +1,21 @@
 import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateStatus } from '../../../redux/profileReducer';
+import { RootState } from '../../../redux/redux-store';
 
 type PropsType = {
     authId: number | null,
-    status: string,
     pageId: number
-
-    updateStatus: (status: string) => void
 }
 
 const ProifleStatus = (props: PropsType) => {
 
+    const mStatus = useSelector((state: RootState) => {return state.profile.status})
+
+    const dispatch = useDispatch();
+
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
+    let [status, setStatus] = useState(mStatus);
 
     const activateEditMode = () => {
         if(props.authId === props.pageId){
@@ -21,7 +25,7 @@ const ProifleStatus = (props: PropsType) => {
 
     const deactivateEditMode = () => {
         setEditMode(false);
-        props.updateStatus(status);
+        dispatch(updateStatus(status));
     }
 
     const changeText = (e: any) => {
@@ -30,8 +34,8 @@ const ProifleStatus = (props: PropsType) => {
     }
 
     useEffect(() => {
-        setStatus(props.status);
-    },[props.status])
+        setStatus(mStatus);
+    },[mStatus])
 
 
 

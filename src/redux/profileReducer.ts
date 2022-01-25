@@ -164,11 +164,10 @@ export const updateStatus = (status: string): ThunkType => {
     }
 }
 
-export const uploadPhoto = (file: any): ThunkType => {
+export const uploadPhoto = (file: File): ThunkType => {
     return async (dispatch: DispatchType) => {
         let data = await profileAPI.uploadPhoto(file);
             if(data.data.resultCode === 0){
-                console.log(data.data)
                 dispatch(actions.changePhoto(data.data.data.photos));
             }
     }

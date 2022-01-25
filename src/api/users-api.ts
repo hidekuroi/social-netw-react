@@ -10,7 +10,7 @@ type GetUsersResponseType = {
 
 export const usersAPI = {
     getUsers(pageSize = 10, pageNumber = 1, filter: FilterType) {
-        return instance.get<GetUsersResponseType>(`users?count=${pageSize}&page=${pageNumber}&term=${filter.term}` + (filter.friend ? `&friend=${filter.friend}` : '') )
+        return instance.get<GetUsersResponseType>(`users?count=${pageSize}&page=${pageNumber}&term=${filter.term}` + (filter.friend == true || filter.friend == false ? `&friend=${filter.friend}` : '') )
         .then(response => response.data)
     },
     followUser(userId: number) {

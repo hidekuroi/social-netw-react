@@ -27,6 +27,12 @@ let numberOfPages = Math.ceil(props.totalUsersCount / props.pageSize);
 
 let pages: PagesType = () => {
         let endPages = [];
+        if(numberOfPages <= 6) {
+            for(let i=1; i <= numberOfPages; i++){
+                endPages.push(i);
+            }
+            return endPages;
+        }
             if(props.currentPage <= 4){
             for(let i=1;i<=6;i++){
                 endPages.push(i);  
