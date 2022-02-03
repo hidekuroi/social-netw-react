@@ -41,3 +41,14 @@ export type FilterType = {
     term: string,
     friend: null | boolean
 }
+
+export type MessageType = {
+    id: string
+    body: string
+    translatedBody: null | any
+    addedAt: string
+    senderId: number
+    senderName: string
+    recipientId: number
+    viewed: boolean
+}

@@ -56,6 +56,7 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import GroupIcon from '@mui/icons-material/Group';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ForumIcon from '@mui/icons-material/Forum';
 import { NavLink } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -106,6 +107,14 @@ const Menu = (props: PropsType) => {
                   <ChatIcon />
                 </ListItemIcon>
                 <ListItemText primary="Messenger" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton component={NavLink} to="/chat">
+                <ListItemIcon>
+                  <ForumIcon />
+                </ListItemIcon>
+                <ListItemText  sx={{ color: '' }} primary="Chat"/>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>

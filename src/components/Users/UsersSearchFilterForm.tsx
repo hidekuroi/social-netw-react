@@ -22,9 +22,11 @@ const UsersSearchFilterForm = (props: PropsType) => {
 
     const formik = useFormik({
         initialValues: {
-          term: '',
-          friend: null as null | boolean | string
+          term: props.filter.term,
+          friend: props.filter.friend as null | boolean | string
         },
+        enableReinitialize: true,
+
         onSubmit: (values) => {
 
             if(values.friend == 'null') values.friend = null;

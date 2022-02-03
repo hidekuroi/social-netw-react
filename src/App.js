@@ -15,13 +15,12 @@ import Loading from './components/common/Loading';
 import Feed from './components/Feed/Feed';
 import Button from '@mui/material/Button';
 
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
+const ChatPage = lazy(() => import('./pages/ChatPage'));
 
 
 const App = (props) => {
@@ -74,6 +73,7 @@ const App = (props) => {
             <Route path='/login' render={ () => <LoginContainer /> } />
               <Route path='/users' render={ () => <UsersContainer /> } />
               <Route path='/profile/:userId?' render={ () => <ProfileContainer /> } />
+              <Route path='/chat' render={() => <ChatPage />} />
               <Route path='/' exact><Redirect to='/feed'/></Route>
               <Route path="*" render={() => <div><Button variant="contained">SEMEN RETENTION</Button></div>} />
             </Switch>

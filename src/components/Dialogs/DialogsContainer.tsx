@@ -1,11 +1,11 @@
 import React from 'react';
-import { sendMessage } from '../../redux/dialogsReducer';
 import { connect, ConnectedProps } from 'react-redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import Dialogs from './Dialogs';
 import { compose } from 'redux';
 import { reset } from 'redux-form';
 import { RootState } from '../../redux/redux-store';
+
 
 type PropsType = ConnectedProps<typeof container>
 
@@ -17,7 +17,7 @@ let mapStateToProps = (state: RootState) => {
     }
 }
 
-let container = connect(mapStateToProps, { sendMessage, reset })
+let container = connect(mapStateToProps, { reset })
 
 
 

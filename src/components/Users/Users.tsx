@@ -17,6 +17,7 @@ export type UsersPropsType = {
     onFilterSet: (filter: FilterType) => void
 }
 
+
 const Users = (props: UsersPropsType) => {  
 
     let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
@@ -37,6 +38,7 @@ const Users = (props: UsersPropsType) => {
     const unfollowUser = (userId:number) => {
         dispatch(unfollowUsr(userId))
     }
+ 
 
 
     return (

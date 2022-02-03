@@ -1,8 +1,6 @@
 import React from 'react';
 import classes from './Navbar.module.css';
-import RecentDialogs from './RecentDialogs/RecentDialogs';
 import Menu from './Menu/Menu';
-import {Route} from 'react-router-dom';
 import { AuthInitialStateType } from '../../redux/authReducer';
 import { DialogType } from '../../redux/dialogsReducer';
 
@@ -12,12 +10,6 @@ type PropsType = {
 }
 
 const Navbar = (props: PropsType) => {
-
-  let recentDialogs = () => {
-    return(
-      <RecentDialogs recentDialogs={props.dialogsData} />
-    );
-  }
   if(props.auth.isAuth){
     return(
       <div>

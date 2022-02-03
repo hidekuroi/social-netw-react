@@ -1,23 +1,26 @@
-import React from 'react';
-import Message from './Message/Message';
+import React, { useEffect } from 'react';
 import classes from './Dialogs.module.css';
-import DialogItem from './DialogItem/DialogItem';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { DialogsInitialStateType } from '../../redux/dialogsReducer';
+import { DialogsInitialStateType, getDialogs, getUnreadMessagesCount, sendMessageAPI } from '../../redux/dialogsReducer';
 import { Input } from '../common/FormControls';
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
+import { actions } from '../../redux/dialogsReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import DialogList from './DialogList';
+import CurrentDialog from './CurrentDialog';
+import { RootState } from '../../redux/redux-store';
+
 
 type PropsType = {
     messengerData: DialogsInitialStateType,
 
-    sendMessage: (input: string) => void,
     reset: (field: string) => void
 };
 
 const MessengerInputForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) => {
-    console.log(props)
+
     return(
         <form onSubmit={props.handleSubmit}>
             <Stack direction="row" spacing={2}>
@@ -39,33 +42,34 @@ const MessengerInputReduxForm = reduxForm<{}, {}>({
 })(MessengerInputForm);
 
 const Dialogs = (props: PropsType) => {
+    const companionId = useSelector((state: RootState) => {return state.messenger.companionId})
 
-    let dialogsData = props.messengerData.dialogsData;
+    const dispatch = useDispatch();
 
-    let dialogsItems = dialogsData
-    .map(el => (<DialogItem name={el.name} id={el.id} />));
+    useEffect(() => {
+        dispatch(getDialogs())
+    }, []);
 
+    useEffect(() => {
+        dispatch(getUnreadMessagesCount())
+        console.log(`NEW MESSAGES: ${props.messengerData.newMessagesCount}`)
+    },[props.messengerData.newMessagesCount])
+    
 
-    let messagesData = props.messengerData.messagesData;
-
-    let messages = messagesData
-    .map(el => (<Message text={el.message} id={el.id} />));
+    
 
     const onSendMessage = (formData: any) => {
         console.log(formData)
-        props.sendMessage(formData);
+        dispatch(sendMessageAPI(companionId, formData.messengerInput));
         props.reset('messenger');
     };
 
     return(
         <div className={classes.dialogs}>
-            <div className={classes.dialogItems}>
-                {dialogsItems}
-            </div>
+            <DialogList dialogsData={props.messengerData.dialogsData} />
             <div className={classes.messenger}>
-                <div className={classes.messages}>
-                    {messages}
-                </div>
+                <CurrentDialog />
+                
                 <div className={classes.messageInput}>
                     <MessengerInputReduxForm onSubmit={onSendMessage}/>
                 </div>
