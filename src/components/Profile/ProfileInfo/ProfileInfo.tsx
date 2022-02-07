@@ -9,6 +9,11 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/redux-store';
 import { actions, uploadInfo, uploadPhoto } from '../../../redux/profileReducer';
+import {actions as actions2} from '../../../redux/dialogsReducer'
+import { startDialog } from '../../../redux/dialogsReducer';
+import { Redirect, useHistory } from 'react-router-dom';
+
+const changeCompanionId = actions2.changeCompanionId;
 
 type PropsType = {
     auth: any,
@@ -19,6 +24,7 @@ const ProfileInfo = (props: PropsType) => {
     const userPage = useSelector((state:RootState) => {return state.profile.userPage})
     const userPhoto = useSelector((state: RootState) => {return state.profile.userPhoto})
 
+    const history = useHistory();
     const dispatch = useDispatch()
 
     
@@ -58,6 +64,14 @@ const ProfileInfo = (props: PropsType) => {
         setEditMode(false);
     }
 
+    const onStartDialog = () => {
+        dispatch(startDialog(userPage.userId))
+        dispatch(changeCompanionId(userPage.userId))
+        history.push({
+            pathname: `/messages/${userPage.userId}`,
+          })
+    }
+
     
     return(
     <div>
@@ -71,6 +85,10 @@ const ProfileInfo = (props: PropsType) => {
                 </div>}
             </div>
             <div className={classes.userName}>{userPage.fullName}</div>
+            {!isOwner && <div>
+                <Button variant='contained' onClick={onStartDialog}>Start dialog</Button>
+                <hr />
+                </div>}
            <div className={classes.status}><ProfileStatus authId={props.auth.id}
                                                           pageId={userPage.userId}/></div>
         </div>

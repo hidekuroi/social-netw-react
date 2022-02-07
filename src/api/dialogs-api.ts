@@ -30,6 +30,10 @@ export const dialogsApi = {
     getDialogs() {
         return instance.get<GetDialogsResponseType>(`dialogs`)
         .then(response => response.data)
-    }    
+    },
+    startDialog(userId: number) {
+        return instance.put<any>(`dialogs/${userId}`)
+        .then(response => response.data)
+    }
 
 }

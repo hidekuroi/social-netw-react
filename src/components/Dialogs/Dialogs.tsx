@@ -59,7 +59,6 @@ const Dialogs = (props: PropsType) => {
     
 
     const onSendMessage = (formData: any) => {
-        console.log(formData)
         dispatch(sendMessageAPI(companionId, formData.messengerInput));
         props.reset('messenger');
     };

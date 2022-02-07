@@ -27,14 +27,20 @@
     padding-left: 10px;
 }
 
+.dialog:hover {
+    cursor: pointer;
+    background-color: rgb(0, 238, 238);
+}
+
 .messenger{
     display: grid;
     grid-template-areas: 
     "msgs"
     "inp";
-    min-height: 88vh;
-    padding: 10px;
-    grid-template-rows: 1fr auto;
+    min-height: 83vh;
+    padding-left: 10px;
+    padding-right: 10px;
+    
 }
 
 .messages{
@@ -42,7 +48,6 @@
 }
 
 .messageInput{
-    grid-area: inp;
     margin-left: auto;
     margin-right: auto;
 }
@@ -53,8 +58,29 @@
 
 .myMessage{
     margin-left: 600px;
+    background-color: #f3f3f3;
+    border-radius: 30%;
+    margin-top: 2px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 5px;
 }
 
 .companionMessage{
 }
 
+.hasNewMessages{
+   background-color: #f0efef;
+}
+
+.hasNewMessages:hover{
+    background-color: #ebebeb;
+}
+
+.newMessagesCount {
+    font-weight: bold;
+}
+
+.dialogItem:hover {
+    background-color: #ebebeb;
+}

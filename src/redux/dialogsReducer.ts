@@ -8,6 +8,7 @@ import { InferActionsType, RootState } from "./redux-store";
 const SEND_MESSAGE = '/messenger/SEND-MESSAGE';
 const SET_NEW_MESSAGES_COUNT = '/messenger/SET-NEW-MESSAGES-COUNT'
 const SET_MESSAGES = 'messenger/SET-MESSAGES'
+const UNSHIFT_MESSAGES = 'messenger/UNSHIFT-MESSAGES'
 const SET_COMPANION_DATA = 'messenger/SET-COMPANION-DATA'
 const SET_DIALOGS_DATA = 'messenger/SET-DIALOGS-DATA'
 const CHANGE_COMPANION_ID = 'messenger/CHANGE-COMPANION-ID'
@@ -85,12 +86,17 @@ const dialogsReducer = (state = initialState, action: any): DialogsInitialStateT
         //     return stateCopy;
         // }
         case SET_NEW_MESSAGES_COUNT: {
-            console.log(action.count)
             return {...state, newMessagesCount: action.count}
         }
 
-        case SET_MESSAGES: {
-            return {...state, apiMessagesData: action.messages}
+        case SET_MESSAGES: {   
+            for (let count = 0; count < action.messages.length; count++) {
+                if (state.apiMessagesData[count] == action.messages[count]) action.messages.splice(count, 1)  
+            }
+            let stateCopy = {...state}
+            stateCopy.apiMessagesData = [...state.apiMessagesData]
+            stateCopy.apiMessagesData.push(...action.messages)
+            return stateCopy
         }
 
         case SET_COMPANION_DATA: {
@@ -102,7 +108,14 @@ const dialogsReducer = (state = initialState, action: any): DialogsInitialStateT
         }
 
         case CHANGE_COMPANION_ID: {
-            return {...state, companionId: action.id}
+            return {...state, companionId: action.id, apiMessagesData: []}
+        }
+
+        case UNSHIFT_MESSAGES: {
+            let stateCopy = {...state};
+            stateCopy.apiMessagesData = [...state.apiMessagesData];
+            stateCopy.apiMessagesData.unshift(...action.messages);
+            return stateCopy;
         }
         
         default: {
@@ -118,6 +131,7 @@ export const actions = {
     setNewMessagesCount: (count: number) => ({type: SET_NEW_MESSAGES_COUNT, count} as const),
     sendMessage: (messageData: {messengerInput: string}) => ({type: SEND_MESSAGE, messageData} as const),
     setMessages: (messages: Array<MessageType>) => ({type: SET_MESSAGES, messages} as const),
+    unshiftMessages: (messages: Array<MessageType>) => ({type: UNSHIFT_MESSAGES, messages} as const),
     setDialogsData: (dialogItems: DialogItemType[]) => ({type: SET_DIALOGS_DATA, dialogItems} as const),
     changeCompanionId: (id: number) => ({type: CHANGE_COMPANION_ID, id} as const),
 
@@ -155,6 +169,13 @@ export const getMessages = (userId: number, page = 1, count = 10): ThunkType => 
     }
 }
 
+export const updateMessages = (userId: number, page: number, count = 10): ThunkType => {
+    return async (dispatch: DispatchType) => {
+        let data = await dialogsApi.getMessages(userId, page, count);
+            dispatch(actions.unshiftMessages(data.items))
+    }
+}
+
 export const getCompanionData = (userId: number ): ThunkType => {
     return async (dispatch: DispatchType) => {
         try{
@@ -170,8 +191,14 @@ export const getCompanionData = (userId: number ): ThunkType => {
 export const getDialogs = (): ThunkType => {
     return async (dispatch: DispatchType) => {
         let data = await dialogsApi.getDialogs();
-        console.log(data);
             dispatch(actions.setDialogsData(data))
+    }
+}
+
+export const startDialog = (userId: number): ThunkType => {
+    return async (dispatch: DispatchType) => {
+        let data = await dialogsApi.startDialog(userId);
+            console.log(data)
     }
 }
 
