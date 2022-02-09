@@ -70,7 +70,7 @@
 }
 
 .hasNewMessages{
-   background-color: #f0efef;
+   background-color: #ebebeb;
 }
 
 .hasNewMessages:hover{
@@ -82,5 +82,9 @@
 }
 
 .dialogItem:hover {
+    background-color: #ebebeb;
+}
+
+.active {
     background-color: #ebebeb;
 }

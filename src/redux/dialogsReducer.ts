@@ -89,14 +89,34 @@ const dialogsReducer = (state = initialState, action: any): DialogsInitialStateT
             return {...state, newMessagesCount: action.count}
         }
 
-        case SET_MESSAGES: {   
+        case SET_MESSAGES: { 
+            let newMessages = []
+            if(state.apiMessagesData.length >= 20) {
+            // let length = state.apiMessagesData.length - 20 
+            // let newMessages = [];
+            // for (let count = 0; count <= 20; count++) {
+            //     if (state.apiMessagesData[count+length]?.id !== action?.messages[count-1]?.id){ 
+            //         if(action?.messages[count-1] !== undefined){
+            //         newMessages.push(action?.messages[count-1])
+            //         console.log('true')
+            //         }
+            //     }
+            // }
             for (let count = 0; count < action.messages.length; count++) {
-                if (state.apiMessagesData[count] == action.messages[count]) action.messages.splice(count, 1)  
+                let match = false;
+                for (let count2 = 0; count2 < state.apiMessagesData.length; count2++) {
+                    if(state.apiMessagesData[count2].id == action.messages[count].id) match = true
+                }
+                if(!match) newMessages.push(action.messages[count])
             }
+
             let stateCopy = {...state}
             stateCopy.apiMessagesData = [...state.apiMessagesData]
-            stateCopy.apiMessagesData.push(...action.messages)
+            stateCopy.apiMessagesData.push(...newMessages)
+            newMessages = [];
             return stateCopy
+        }
+            return {...state, apiMessagesData: action.messages}
         }
 
         case SET_COMPANION_DATA: {
@@ -158,7 +178,7 @@ export const sendMessageAPI = (userId: number, message: string): ThunkType => {
     return async (dispatch: any) => {
         let data = await dialogsApi.sendMessage(userId, message);
             dispatch(actions.sendMessage({messengerInput: message}))
-            dispatch(getMessages(userId))
+            dispatch(getMessages(userId, 1, 20))
     }
 }
 

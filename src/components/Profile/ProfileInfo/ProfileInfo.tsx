@@ -12,6 +12,7 @@ import { actions, uploadInfo, uploadPhoto } from '../../../redux/profileReducer'
 import {actions as actions2} from '../../../redux/dialogsReducer'
 import { startDialog } from '../../../redux/dialogsReducer';
 import { Redirect, useHistory } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 
 const changeCompanionId = actions2.changeCompanionId;
 
@@ -20,9 +21,15 @@ type PropsType = {
 }
 
 const ProfileInfo = (props: PropsType) => {
+    let size = 0;
 
     const userPage = useSelector((state:RootState) => {return state.profile.userPage})
     const userPhoto = useSelector((state: RootState) => {return state.profile.userPhoto})
+    const smallPhoto = useSelector((state: RootState) => {return state.profile.userPage.photos.small})
+    const largePhoto = useSelector((state: RootState) => {return state.profile.userPage.photos.large})
+
+    if(userPhoto == smallPhoto) size = 100;
+    if(userPhoto == largePhoto) size = 240;
 
     const history = useHistory();
     const dispatch = useDispatch()
@@ -76,9 +83,8 @@ const ProfileInfo = (props: PropsType) => {
     return(
     <div>
         <div>
-            <img className={classes.wallpaper} src="https://img5.goodfon.ru/original/1600x900/6/71/peizazh-kholmy-minimalizm.jpg" alt="breaps"/>
             <div className={classes.profilePicture}>
-                <img src={userPhoto ? userPhoto : spot} className={!userPhoto ? classes.small : undefined} onClick={onChangePhotoSize} alt="profpiclarge" />
+                <Avatar sx={{width: size, height: size}} src={userPhoto ? userPhoto : spot} className={!userPhoto ? classes.small : undefined} onClick={onChangePhotoSize} alt="profpiclarge" />
                 {isOwner && <div>
                     <label>{`Choose a profile picture: `}</label>
                     <Input type="file" id="profilepic" onChange={onUploadPhoto}/>

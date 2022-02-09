@@ -4,6 +4,7 @@ import dialogsReducer from "./dialogsReducer";
 import profileReducer from "./profileReducer";
 import usersReducer from "./usersReducer";
 import appReducer from "./appReducer";
+import chatReducer from "./chatReducer";
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
@@ -13,7 +14,8 @@ let reducers = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     form: formReducer,
-    app: appReducer
+    app: appReducer,
+    chat: chatReducer
 });
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

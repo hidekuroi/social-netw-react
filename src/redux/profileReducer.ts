@@ -74,7 +74,7 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
         }
 
         case SET_USER_PAGE: {
-            let stateCopy = {...state, userPage: action.userData, userPhoto: action.userData.photos.small};
+            let stateCopy = {...state, userPage: action.userData, userPhoto: action.userData.photos.large};
             return stateCopy;
         }
 

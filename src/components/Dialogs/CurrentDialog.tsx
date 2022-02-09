@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompanionData, getMessages, updateMessages } from '../../redux/dialogsReducer';
 import { RootState } from '../../redux/redux-store';
@@ -15,13 +15,18 @@ const CurrentDialog = () => {
 
     const dispatch = useDispatch();
 
+    const [currentDialogPage, setCurrentDialogPage] = useState(2);
+
     useEffect(() => {
         dispatch(getMessages(companionId, 1, 20))
         dispatch(getCompanionData(companionId))
       
-        // setTimeout(() => {
-        //     dispatch(updateMessages(companionId, 2))
-        // }, 2000);
+
+        // amount of api requests per day is limited!!!! :) 
+        // badly that messenger api is REST based and not websocket based
+        // setInterval(() => {
+            // dispatch(getMessages(companionId, 1, 20))
+        // },3000)
       
     }, [companionId]);
 
@@ -44,8 +49,16 @@ const CurrentDialog = () => {
         if(messagesEndRef != null) messagesEndRef.current.scrollIntoView({ behavior: "auto" })
       }
 
+    const handleScroll = (e: any) => {
+        let element = e.target;
+        if(element.scrollTop === 0){
+            dispatch(updateMessages(companionId, currentDialogPage, 20))
+            setCurrentDialogPage(currentDialogPage + 1)
+        }
+    }
+
     return <div>
-        <div style={{height: '76vh', overflowY: 'scroll'}} className={classes.messages}>
+        <div style={{height: '76vh', overflowY: 'scroll'}} className={classes.messages} onScroll={ handleScroll }>
                     {messages.length == 0 && companionId == 0 ? <div>Choose Dialog</div> : messages.length !==0 ? messages : <div>There are no messages. Say Hello!</div>}
 
                 <div ref={messagesEndRef as React.RefObject<HTMLDivElement>} />

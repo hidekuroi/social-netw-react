@@ -6,10 +6,11 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../../redux/dialogsReducer';
 import classes from './../Dialogs.module.css';
+import { RootState } from '../../../redux/redux-store';
+import { useState } from 'react';
 
 
 const changeCompanionId = actions.changeCompanionId;
@@ -25,6 +26,7 @@ type PropsType = {
 }
 
 const DialogItem = (props: PropsType) => {
+    const companionId = useSelector((state: RootState) => {return state.messenger.companionId})
     const dispatch = useDispatch()
     const [hasNewM, toggleHasNewM] = useState(props.hasNewMessages)
 
@@ -35,7 +37,7 @@ const DialogItem = (props: PropsType) => {
 
   return (
       <div>
-      <ListItem onClick={changeCurrentDialog} className={`${classes.dialogItem} ${hasNewM && classes.hasNewMessages}`}
+      <ListItem onClick={changeCurrentDialog} className={`${classes.dialogItem} ${hasNewM && classes.hasNewMessages} ${companionId == props.id && classes.active}`}
        component={Link} to={'/messages/' + props.id}
        alignItems="flex-start">
         <ListItemAvatar>

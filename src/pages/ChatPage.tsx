@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import Spot from './../img/41.png';
 import { TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { chatAPI } from '../api/chat-api';
 
 
 type ChatMessageType = {
@@ -26,25 +27,10 @@ const Chat = () => {
   const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
 
   useEffect(() => {
-    let ws: WebSocket
-
-    const closeHandler = () => {
-      setTimeout(createChannel, 3000)
-    }
-
-    function createChannel() {
-      ws?.removeEventListener('close', closeHandler)
-      ws?.close()
-      ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
-      ws.addEventListener('close', closeHandler)
-      setWsChannel(ws)
-    }
-
-    createChannel();
-  
+    chatAPI.subscribe()
+    
     return () => {
-      ws.removeEventListener('close', closeHandler)
-      ws.close()
+      chatAPI.unsubscribe();
     };
   }, []);
   
