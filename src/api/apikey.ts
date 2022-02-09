@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-// const APIKey = '21a07c79-0ac8-4207-a8de-488bac5ab13f'; hidekuroi2
-const APIKey = '1e662bf6-84e8-4d8a-b097-9a6dde7c9a8d';
+// const APIKey = 'b76c2a94-cc93-48d1-946b-5cfb42f4d667'; hidekuroi2
+const APIKey = 'aa98d0ce-b7dd-49e9-976c-404fd4f26d5b';
 
 export default APIKey;
