@@ -64,7 +64,6 @@ const UsersContainer = () => {
     if(filter.friend !== null) query.friend = String(filter.friend)
     if(currentPage !== 1) query.page = String(currentPage)
 
-    debugger;
     history.push({
       pathname: '/users',
       search: queryString.stringify(query)

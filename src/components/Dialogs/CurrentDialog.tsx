@@ -4,6 +4,7 @@ import { getCompanionData, getMessages, updateMessages } from '../../redux/dialo
 import { RootState } from '../../redux/redux-store';
 import Message from './Message/Message';
 import classes from './Dialogs.module.css';
+import { Grid } from '@mui/material';
 
 const CurrentDialog = () => {
     const companionData = useSelector((state: RootState)=>{return state.messenger.companionData})
@@ -16,6 +17,7 @@ const CurrentDialog = () => {
     const dispatch = useDispatch();
 
     const [currentDialogPage, setCurrentDialogPage] = useState(2);
+    const [isDialogInitialized, setDialogInitialized] = useState(false);
 
     useEffect(() => {
         dispatch(getMessages(companionId, 1, 20))
@@ -33,20 +35,23 @@ const CurrentDialog = () => {
     let messagesData = useSelector((state: RootState) => {return state.messenger.apiMessagesData})
 
     let messages = messagesData
-    .map(el => (<Message message={el} myPicture={myPicture} companionId={companionId}
-         companionPicture={companionPicture} spot={spot} myId={myId} />));
+    .map(el => (<Grid item xs={12}><Message message={el} myPicture={myPicture} companionId={companionId}
+         companionPicture={companionPicture} spot={spot} myId={myId} /></Grid>));
 
 
     let messagesEndRef = useRef<null | HTMLDivElement>(null); ;
+
+    
+
     useEffect(() => {
-        scrollToBottom();
+        if(!isDialogInitialized){
+            scrollToBottom();
+            // setDialogInitialized(true);
+        }
     }, [messagesData])
 
     const scrollToBottom = () => {
-        //wtf fucking TS ingoring this != null verification and says:
-        //"OBJECT IS POSSIBLY NULL SO FUCK YOU, ILL FREEZE YOUR APP, I DONT CARE THAT YOU ARE PREVENTING THIS CASE"
-        //@ts-ignore
-        if(messagesEndRef != null) messagesEndRef.current.scrollIntoView({ behavior: "auto" })
+        if(messagesEndRef.current != null) messagesEndRef.current.scrollIntoView({ behavior: "auto" })
       }
 
     const handleScroll = (e: any) => {
@@ -59,8 +64,9 @@ const CurrentDialog = () => {
 
     return <div>
         <div style={{height: '76vh', overflowY: 'scroll'}} className={classes.messages} onScroll={ handleScroll }>
+                <Grid container>
                     {messages.length == 0 && companionId == 0 ? <div>Choose Dialog</div> : messages.length !==0 ? messages : <div>There are no messages. Say Hello!</div>}
-
+                </Grid>
                 <div ref={messagesEndRef as React.RefObject<HTMLDivElement>} />
         </div>
     </div>;

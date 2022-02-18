@@ -51,16 +51,16 @@ const App = (props) => {
     else{
       return (
         <body className={props.app.darkTheme ? 'darkTheme' : null}>
-          <Box sx={{ flexGrow: 1, width: '1200px',
+          <Box sx={{ flexGrow: 1, width: 'auto',
   minHeight: '100vh',
-  margin: '0 auto'  }}>
+  margin: '0 auto', marginTop: '70px'  }}>
       <Grid container spacing={2}>
         <Grid item  md={12}>
           <HeaderContainer id="header" className='header'/>
         </Grid>
         <Grid item  md={2}>
-          <NavbarContainer className='navbar'/>
-        </Grid>
+          <div></div>
+        </Grid> 
         
         <Grid item  md={10}>
           

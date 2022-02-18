@@ -31,8 +31,8 @@ const DialogItem = (props: PropsType) => {
     const [hasNewM, toggleHasNewM] = useState(props.hasNewMessages)
 
     const changeCurrentDialog = () => {
-        dispatch(changeCompanionId(props.id))
-        toggleHasNewM(false)
+      if(companionId != props.id) dispatch(changeCompanionId(props.id))
+      toggleHasNewM(false)
     }
 
   return (

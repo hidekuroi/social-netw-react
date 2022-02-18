@@ -12,7 +12,7 @@ import { actions, uploadInfo, uploadPhoto } from '../../../redux/profileReducer'
 import {actions as actions2} from '../../../redux/dialogsReducer'
 import { startDialog } from '../../../redux/dialogsReducer';
 import { Redirect, useHistory } from 'react-router-dom';
-import { Avatar } from '@mui/material';
+import { Avatar, Grid } from '@mui/material';
 
 const changeCompanionId = actions2.changeCompanionId;
 
@@ -82,6 +82,8 @@ const ProfileInfo = (props: PropsType) => {
     
     return(
     <div>
+    <Grid container spacing={2}>
+        <Grid item xs={4}>
         <div>
             <div className={classes.profilePicture}>
                 <Avatar sx={{width: size, height: size}} src={userPhoto ? userPhoto : spot} className={!userPhoto ? classes.small : undefined} onClick={onChangePhotoSize} alt="profpiclarge" />
@@ -98,13 +100,16 @@ const ProfileInfo = (props: PropsType) => {
            <div className={classes.status}><ProfileStatus authId={props.auth.id}
                                                           pageId={userPage.userId}/></div>
         </div>
-
+        </Grid>
+        <Grid item xs={8}>
         <div className={classes.info}>
             {!editMode ? <div>
                 {isOwner && <Button variant="contained" onClick={activateEditMode}>Edit info</Button>}
                 <Info userPage={userPage} />
             </div> : <div><EditInfoForm initialValues={userPage} onSubmit={updateInfo}/></div>}
         </div>
+        </Grid>
+    </Grid>
     </div>
     );
 }

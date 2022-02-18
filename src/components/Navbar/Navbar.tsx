@@ -2,11 +2,9 @@ import React from 'react';
 import classes from './Navbar.module.css';
 import Menu from './Menu/Menu';
 import { AuthInitialStateType } from '../../redux/authReducer';
-import { DialogType } from '../../redux/dialogsReducer';
 
 type PropsType = {
   auth: AuthInitialStateType,
-  dialogsData: Array<DialogType>
 }
 
 const Navbar = (props: PropsType) => {

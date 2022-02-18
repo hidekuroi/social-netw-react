@@ -58,7 +58,7 @@
 
 .myMessage{
     margin-left: 600px;
-    background-color: #f3f3f3;
+    background-color: #f7f7f7;
     border-radius: 30%;
     margin-top: 2px;
     padding-left: 10px;
@@ -86,5 +86,9 @@
 }
 
 .active {
+    background-color: #ebebeb;
+}
+
+.notViewed {
     background-color: #ebebeb;
 }

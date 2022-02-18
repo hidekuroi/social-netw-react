@@ -33,7 +33,7 @@ const HeaderContainer = (props: PropsType) => {
 let mapStateToProps = (state: RootState) => ({
     authData: state.auth,
     avatar: state.auth.signedInUserPage.photos.small,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
 });
 
 export default connect(mapStateToProps, { getProfile, authCheck, signOut})(HeaderContainer);

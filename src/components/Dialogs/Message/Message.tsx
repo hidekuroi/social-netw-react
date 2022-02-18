@@ -34,7 +34,7 @@ const Message = (props: PropsType) => {
     }
 
     return(
-        <div className={`${isMyMessage ? classes.myMessage : classes.companionMessage}`}>
+        <div className={`${isMyMessage ? classes.myMessage : classes.companionMessage} ${!props.message.viewed && classes.notViewed}`}>
             <Stack>
                 <Avatar component={Link} src={avatar} to={link}/>
                 <div className={`${classes.messageText}`}>{props.message.body}</div>

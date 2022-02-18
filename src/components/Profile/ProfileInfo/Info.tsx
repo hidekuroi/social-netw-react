@@ -17,14 +17,14 @@ const Info = (props: PropsType) => {
             <div className={classes.lookingForAJobDescription}>Description: {props.userPage.lookingForAJobDescription}</div>
             <div className={classes.contacts}>
                 Contacts:
-                <div><div className={classes.contactItem}>Facebook: {contacts.facebook}</div></div>
-                <div><div className={classes.contactItem}>Github: {contacts.github}</div></div>
-                <div><div className={classes.contactItem}>Instagram: {contacts.instagram}</div></div>
-                <div><div className={classes.contactItem}>Main Link: {contacts.mainLink}</div></div>
-                <div><div className={classes.contactItem}>Twitter: {contacts.twitter}</div></div>
-                <div><div className={classes.contactItem}>VK: {contacts.vk}</div></div>
-                <div><div className={classes.contactItem}>Website: {contacts.website}</div></div>
-                <div><div className={classes.contactItem}>Youtube: {contacts.youtube}</div></div>
+                <div>Facebook:<a href={contacts.facebook ? contacts.facebook : undefined} className={classes.contactItem}> {contacts.facebook}</a></div>
+                <div>Github:<a href={contacts.github ? contacts.github : undefined} className={classes.contactItem}> {contacts.github}</a></div>
+                <div>Instagram:<a href={contacts.instagram ? contacts.instagram : undefined} className={classes.contactItem}> {contacts.instagram}</a></div>
+                <div>Main Link:<a href={contacts.mainLink ? contacts.mainLink : undefined} className={classes.contactItem}> {contacts.mainLink}</a></div>
+                <div>Twitter:<a href={contacts.twitter ? contacts.twitter : undefined} className={classes.contactItem}> {contacts.twitter}</a></div>
+                <div>VK:<a href={contacts.vk ? contacts.vk : undefined} className={classes.contactItem}> {contacts.vk}</a></div>
+                <div>Website:<a href={contacts.website ? contacts.website : undefined} className={classes.contactItem}> {contacts.website}</a></div>
+                <div>YouTube:<a href={contacts.youtube ? contacts.youtube : undefined} className={classes.contactItem}> {contacts.youtube}</a></div>
             </div>
         </div>
     )
