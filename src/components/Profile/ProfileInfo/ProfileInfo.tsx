@@ -6,13 +6,16 @@ import ProfileStatus from './ProifleStatus';
 import EditInfoForm from './EditInfoForm';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/redux-store';
-import { actions, uploadInfo, uploadPhoto } from '../../../redux/profileReducer';
+import { actions, followUserProfile, getIsFollow, unfollowUserProfile, uploadInfo, uploadPhoto } from '../../../redux/profileReducer';
 import {actions as actions2} from '../../../redux/dialogsReducer'
 import { startDialog } from '../../../redux/dialogsReducer';
 import { Redirect, useHistory } from 'react-router-dom';
 import { Avatar, Grid } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import { followUser, unfollowUser } from '../../../redux/usersReducer';
 
 const changeCompanionId = actions2.changeCompanionId;
 
@@ -27,6 +30,9 @@ const ProfileInfo = (props: PropsType) => {
     const userPhoto = useSelector((state: RootState) => {return state.profile.userPhoto})
     const smallPhoto = useSelector((state: RootState) => {return state.profile.userPage.photos.small})
     const largePhoto = useSelector((state: RootState) => {return state.profile.userPage.photos.large})
+    const isFollowed = useSelector((state: RootState) => {return state.profile.isFollowed})
+
+    const [isFollowing, setIsFollowing] = useState(false)
 
     if(userPhoto == smallPhoto) size = 100;
     if(userPhoto == largePhoto) size = 240;
@@ -79,6 +85,24 @@ const ProfileInfo = (props: PropsType) => {
           })
     }
 
+    const followHandler = () => {
+        setIsFollowing(true)
+        setTimeout(() => {
+            setIsFollowing(false)
+        }, 1000);
+        dispatch(followUserProfile(userPage.userId))
+        // dispatch(getIsFollow(userPage.userId))
+    }
+
+    const unfollowHandler = () => {
+        setIsFollowing(true)
+        setTimeout(() => {
+            setIsFollowing(false)
+        }, 1000);
+        dispatch(unfollowUserProfile(userPage.userId))
+        // dispatch(getIsFollow(userPage.userId))
+    }
+
     
     return(
     <div>
@@ -88,13 +112,22 @@ const ProfileInfo = (props: PropsType) => {
             <div className={classes.profilePicture}>
                 <Avatar sx={{width: size, height: size}} src={userPhoto ? userPhoto : spot} className={!userPhoto ? classes.small : undefined} onClick={onChangePhotoSize} alt="profpiclarge" />
                 {isOwner && <div>
-                    <label>{`Choose a profile picture: `}</label>
-                    <Input type="file" id="profilepic" onChange={onUploadPhoto}/>
+                    <label htmlFor="outlined-button-file">
+        <Input id="outlined-button-file" type="file" sx={{display: 'none'}} onChange={onUploadPhoto} />
+        <Button variant="outlined" sx={{display: '', marginLeft: 'auto', marginRight: 'auto'}} component="span">
+          Upload Photo
+        </Button>
+      </label>
                 </div>}
             </div>
             <div className={classes.userName}>{userPage.fullName}</div>
             {!isOwner && <div>
+                <Stack direction='row' spacing={1}>
                 <Button variant='contained' onClick={onStartDialog}>Start dialog</Button>
+                {isFollowed 
+                ? <Button variant='outlined' disabled={isFollowing} color='error' onClick={unfollowHandler}>Unfollow</Button>
+                : <Button variant='outlined' disabled={isFollowing} color='primary' onClick={followHandler}>Follow</Button>} 
+                </Stack>
                 <hr />
                 </div>}
            <div className={classes.status}><ProfileStatus authId={props.auth.id}
@@ -104,8 +137,22 @@ const ProfileInfo = (props: PropsType) => {
         <Grid item xs={8}>
         <div className={classes.info}>
             {!editMode ? <div>
-                {isOwner && <Button variant="contained" onClick={activateEditMode}>Edit info</Button>}
-                <Info userPage={userPage} />
+                {isOwner && <Button variant="outlined" color='primary' onClick={activateEditMode}>Edit info</Button>}
+                <Box component="span" 
+                sx={{
+                    display: 'block',
+                    p: 1,
+                    m: 1,
+                    bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+                    color: (theme) =>
+                      theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+                    border: '1px solid',
+                    borderColor: (theme) =>
+                      theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
+                    borderRadius: 2,
+                    fontSize: '0.875rem',
+                    fontWeight: '700',
+                  }}><Info userPage={userPage} /></Box>
             </div> : <div><EditInfoForm initialValues={userPage} onSubmit={updateInfo}/></div>}
         </div>
         </Grid>

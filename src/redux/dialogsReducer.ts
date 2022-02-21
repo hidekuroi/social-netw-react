@@ -38,7 +38,7 @@ export type DialogsInitialStateType = {
     companionData: UserPageType
     apiMessagesData: Array<MessageType>,
     dialogsData: Array<DialogItemType>,
-    newMessagesCount: number | null,
+    newMessagesCount: number,
     companionId: number,
 }
 
@@ -69,7 +69,7 @@ let initialState: DialogsInitialStateType = {
     companionId: 0,
     apiMessagesData: [],
     dialogsData: [],
-    newMessagesCount: null
+    newMessagesCount: 0
 };
 
 
@@ -92,19 +92,10 @@ const dialogsReducer = (state = initialState, action: any): DialogsInitialStateT
         case SET_MESSAGES: { 
             let newMessages = []
             if(state.apiMessagesData.length >= 20) {
-            // let length = state.apiMessagesData.length - 20 
-            // let newMessages = [];
-            // for (let count = 0; count <= 20; count++) {
-            //     if (state.apiMessagesData[count+length]?.id !== action?.messages[count-1]?.id){ 
-            //         if(action?.messages[count-1] !== undefined){
-            //         newMessages.push(action?.messages[count-1])
-            //         console.log('true')
-            //         }
-            //     }
-            // }
             for (let count = 0; count < action.messages.length; count++) {
                 let match = false;
                 for (let count2 = 0; count2 < state.apiMessagesData.length; count2++) {
+                    console.log(action.messages[count])
                     if(state.apiMessagesData[count2].id == action.messages[count].id) match = true
                 }
                 if(!match) newMessages.push(action.messages[count])
@@ -183,9 +174,10 @@ export const sendMessageAPI = (userId: number, message: string): ThunkType => {
 }
 
 export const getMessages = (userId: number, page = 1, count = 10): ThunkType => {
-    return async (dispatch: DispatchType) => {
+    return async (dispatch: any) => {
         let data = await dialogsApi.getMessages(userId, page, count);
             dispatch(actions.setMessages(data.items))
+            dispatch(getUnreadMessagesCount())
     }
 }
 

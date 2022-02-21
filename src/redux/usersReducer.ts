@@ -130,6 +130,7 @@ const followFlow = async (dispatch: DispatchType, apiMethod: Function, userId: n
                 dispatch(actions.addFollowingUser(false, userId));
                 if(data.resultCode === 0){
                     dispatch(actions.toggleFollow(userId));
+                    return data.resultCode
                 }               
 } 
 

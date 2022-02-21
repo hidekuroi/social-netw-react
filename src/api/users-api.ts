@@ -20,5 +20,9 @@ export const usersAPI = {
     unfollowUser(userId: number) {
         return instance.delete<DefaultResponseType>(`follow/` + userId)
         .then(response => response.data)
+    },
+    getIsFollowed(userId: number) {
+        return instance.get<boolean>(`follow/` + userId)
+        .then(response => response.data)
     }
 }

@@ -38,6 +38,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
+  boxShadow: '0 12px  15px -4px rgba(31, 73, 125, 0.8)'
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -50,6 +51,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(9)} + 1px)`,
   },
+  boxShadow: '0 2px 4px 0 rgba(0,0,0,.2)'
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -194,7 +196,7 @@ export default function MiniDrawer(props: PropsType) {
   );
 
   const renderMenu = (
-    <Menu
+    <Menu 
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',
@@ -218,7 +220,7 @@ export default function MiniDrawer(props: PropsType) {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
        <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -276,8 +278,8 @@ export default function MiniDrawer(props: PropsType) {
       <Button variant='text' sx={{fontSize: '1em', color: 'white'}} component={NavLink} to='/login'>Sign In</Button>
       }
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
+          <Box sx={{ display: { xs: 'flex', md: 'none' }}}>
+            <IconButton 
               size="large"
               aria-label="show more"
               aria-controls={mobileMenuId}

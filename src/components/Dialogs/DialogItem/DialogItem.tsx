@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../../redux/dialogsReducer';
+import { actions, getUnreadMessagesCount } from '../../../redux/dialogsReducer';
 import classes from './../Dialogs.module.css';
 import { RootState } from '../../../redux/redux-store';
 import { useState } from 'react';
@@ -33,6 +33,7 @@ const DialogItem = (props: PropsType) => {
     const changeCurrentDialog = () => {
       if(companionId != props.id) dispatch(changeCompanionId(props.id))
       toggleHasNewM(false)
+      dispatch(getUnreadMessagesCount())
     }
 
   return (

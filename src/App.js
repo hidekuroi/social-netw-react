@@ -51,16 +51,16 @@ const App = (props) => {
     else{
       return (
         <body className={props.app.darkTheme ? 'darkTheme' : null}>
-          <Box sx={{ flexGrow: 1, width: 'auto',
+          <Box sx={{ flexGrow: 1, width: '1200px',
   minHeight: '100vh',
   margin: '0 auto', marginTop: '70px'  }}>
       <Grid container spacing={2}>
         <Grid item  md={12}>
           <HeaderContainer id="header" className='header'/>
         </Grid>
-        <Grid item  md={2}>
+        {/* <Grid item  md={2}>
           <div></div>
-        </Grid> 
+        </Grid>  */}
         
         <Grid item  md={10}>
           
@@ -75,7 +75,7 @@ const App = (props) => {
               <Route path='/profile/:userId?' render={ () => <ProfileContainer /> } />
               <Route path='/chat' render={() => <ChatPage />} />
               <Route path='/' exact><Redirect to='/feed'/></Route>
-              <Route path="*" render={() => <div><Button variant="contained">SEMEN RETENTION</Button></div>} />
+              <Route path="*" render={() => <div><Button variant="contained" color='error'>SEMEN RETENTION</Button></div>} />
             </Switch>
             </Suspense>
           

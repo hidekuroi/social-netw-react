@@ -1,8 +1,10 @@
+import { usersAPI } from './../api/users-api';
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { profileAPI } from "../api/profile-api";
 import { UserPageType, PostType } from "../types/types";
 import { InferActionsType, RootState } from "./redux-store";
+import { followUser, unfollowUser } from './usersReducer';
 
 //do not forget to add types for actions; and delete this "!"
 
@@ -12,10 +14,12 @@ const CHANGE_PHOTO_SIZE = '/profile/CHANGE-PHOTO-SIZE';
 const SET_STATUS = '/profile/SET-STATUS';
 const DELETE_POST = '/profile/DELETE-POST';
 const CHANGE_PHOTO = '/profile/CHANGE-PHOTO';
+const SET_IS_FOLLOWED = '/profile/SET-IS-FOLLOWED'
 
 
 type InitialStateType = {
     postsData: Array<PostType>,
+    isFollowed: boolean
     userPage: UserPageType,
     userPhoto: string | null,
     status: string
@@ -27,6 +31,7 @@ let initialState: InitialStateType = {
             {id:2, text:'lets celebrate and suck some dick', likesCount:1488}
         ],
         status: '',
+        isFollowed: false,
         userPage: {aboutMe: '',
             contacts: {facebook: '',
             website: '',
@@ -78,8 +83,6 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
             return stateCopy;
         }
 
-        
-
         case CHANGE_PHOTO_SIZE: {
                 if(state.userPage!.photos.small === state.userPhoto) {
                     let stateCopy = {...state, userPhoto: state.userPage!.photos.large};
@@ -108,6 +111,10 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
             return {...state, status: action.status}
         }
 
+        case SET_IS_FOLLOWED: {
+            return {...state, isFollowed: action.isFollowed}
+        }
+
         default: {
             return state;
         }
@@ -124,6 +131,7 @@ export const actions = {
     changePhotoSize: () => ({type: CHANGE_PHOTO_SIZE} as const),
     setStatus: (status: string) => ({type: SET_STATUS, status} as const),
     deletePost: (postId: number) => ({type: DELETE_POST, postId} as const),
+    setIsFollowed: (isFollowed: boolean) => ({type: SET_IS_FOLLOWED, isFollowed} as const),
     changePhoto: (photos: {small: string | 'https://wiki-vk.ru/s/001/512/41.png', large: string | 'https://wiki-vk.ru/s/001/512/41.png'}) => ({type: CHANGE_PHOTO, photos} as const)
 } 
 
@@ -143,6 +151,30 @@ export const getProfile = (userId: number ): ThunkType => {
     }
 }
 
+export const getIsFollow = (userId: number): ThunkType => {
+    return async (dispatch: DispatchType) => {
+        let data = await usersAPI.getIsFollowed(userId);
+        dispatch(actions.setIsFollowed(data))
+    }
+}
+
+export const followUserProfile = (userId: number): ThunkType => {
+    return async (dispatch: any) => {
+        dispatch(followUser(userId))
+        setTimeout(() => {
+            dispatch(getIsFollow(userId))
+        }, 1000);
+    }
+}
+
+export const unfollowUserProfile = (userId: number): ThunkType => {
+    return async (dispatch: any) => {
+        dispatch(unfollowUser(userId))
+        setTimeout(() => {
+            dispatch(getIsFollow(userId))
+        }, 1000);
+    }
+}
 
 export const getStatus = (userId: number): ThunkType => {
     return async (dispatch: DispatchType) => {

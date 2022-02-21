@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfile, getStatus } from '../../redux/profileReducer';
+import { getIsFollow, getProfile, getStatus } from '../../redux/profileReducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -30,6 +30,7 @@ const ProfileContainer = (props: ProfilePropsType) => {
             dispatch(getProfile(userId));
         }else{
         dispatch(getStatus(userId));
+        dispatch(getIsFollow(userId))
         dispatch(getProfile(userId));
         }
     }, [auth, props.match.params.userId]);

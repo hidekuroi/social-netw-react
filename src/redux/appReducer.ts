@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { authCheck } from "./authReducer";
 import { RootState } from "./redux-store";
+import { getUnreadMessagesCount } from './dialogsReducer';
 
 const SET_INITIALIZED = '/app/SET-INITIALIZED';
 const THEME_CHANGE = '/app/THEME-CHANGE';
@@ -56,6 +57,7 @@ export const initializeApp = () => {
         Promise.all(promises)
         .then(() => {
             dispatch(setInitialized());
+            dispatch(getUnreadMessagesCount())
         });
         
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { NavLink } from 'react-router-dom';
 // import classes from './Menu.module.css';
 
@@ -59,6 +59,9 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ForumIcon from '@mui/icons-material/Forum';
 import { NavLink } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { RootState } from '../../../redux/redux-store';
+import { Badge } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 type PropsType = {
   isAuth: boolean | null
@@ -80,6 +83,15 @@ const theme = createTheme({
 });
 
 const Menu = (props: PropsType) => {
+  const unreadMessagesCountData = useSelector((state: RootState) => {return state.messenger.newMessagesCount})
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(unreadMessagesCountData)
+
+  useEffect(() => {
+    console.log(unreadMessagesCountData)
+    setUnreadMessagesCount(unreadMessagesCountData)
+  }, [unreadMessagesCountData])
+  
+
   if(props.isAuth){
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -104,7 +116,10 @@ const Menu = (props: PropsType) => {
             <ListItem disablePadding>
               <ListItemButton component={NavLink} to='/messages'>
                 <ListItemIcon>
-                  <ChatIcon />
+                  {unreadMessagesCount > 0 ? <Badge badgeContent={unreadMessagesCount} color='error'>
+                    <ChatIcon />
+                  </Badge>
+                  : <ChatIcon />}
                 </ListItemIcon>
                 <ListItemText primary="Messenger" />
               </ListItemButton>
