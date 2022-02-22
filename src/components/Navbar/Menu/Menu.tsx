@@ -50,7 +50,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import ChatIcon from '@mui/icons-material/Chat';
+import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
@@ -117,9 +117,9 @@ const Menu = (props: PropsType) => {
               <ListItemButton component={NavLink} to='/messages'>
                 <ListItemIcon>
                   {unreadMessagesCount > 0 ? <Badge badgeContent={unreadMessagesCount} color='error'>
-                    <ChatIcon />
+                    <EmailIcon />
                   </Badge>
-                  : <ChatIcon />}
+                  : <EmailIcon />}
                 </ListItemIcon>
                 <ListItemText primary="Messenger" />
               </ListItemButton>

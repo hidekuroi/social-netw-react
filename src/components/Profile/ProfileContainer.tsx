@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsFollow, getProfile, getStatus } from '../../redux/profileReducer';
+import { getIsFollow, getProfile, getStatus, initialState } from '../../redux/profileReducer';
+import { actions } from '../../redux/profileReducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { RootState } from '../../redux/redux-store';
+
+const setUserPage = actions.setUserPage
 
 //FIX LATER; MATCH AND HISTORY TYPES
 
@@ -33,6 +36,11 @@ const ProfileContainer = (props: ProfilePropsType) => {
         dispatch(getIsFollow(userId))
         dispatch(getProfile(userId));
         }
+
+        return () => {
+            dispatch(setUserPage(initialState.userPage))
+          }
+
     }, [auth, props.match.params.userId]);
 
         return (

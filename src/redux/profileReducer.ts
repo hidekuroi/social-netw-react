@@ -25,7 +25,7 @@ type InitialStateType = {
     status: string
 }
 
-let initialState: InitialStateType = {
+export let initialState: InitialStateType = {
         postsData: [
             {id:1, text:'breaps, i love dicks', likesCount:228},
             {id:2, text:'lets celebrate and suck some dick', likesCount:1488}

@@ -7,6 +7,9 @@ import EditInfoForm from './EditInfoForm';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import EditIcon from '@mui/icons-material/Edit';
+import SendIcon from '@mui/icons-material/Send';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/redux-store';
 import { actions, followUserProfile, getIsFollow, unfollowUserProfile, uploadInfo, uploadPhoto } from '../../../redux/profileReducer';
@@ -114,7 +117,9 @@ const ProfileInfo = (props: PropsType) => {
                 {isOwner && <div>
                     <label htmlFor="outlined-button-file">
         <Input id="outlined-button-file" type="file" sx={{display: 'none'}} onChange={onUploadPhoto} />
-        <Button variant="outlined" sx={{display: '', marginLeft: 'auto', marginRight: 'auto'}} component="span">
+        <Button variant="outlined" startIcon={<AddAPhotoIcon />}
+        sx={{display: '', marginLeft: 'auto', marginRight: 'auto'}}
+         component="span">
           Upload Photo
         </Button>
       </label>
@@ -123,21 +128,22 @@ const ProfileInfo = (props: PropsType) => {
             <div className={classes.userName}>{userPage.fullName}</div>
             {!isOwner && <div>
                 <Stack direction='row' spacing={1}>
-                <Button variant='contained' onClick={onStartDialog}>Start dialog</Button>
+                <Button variant='contained' startIcon={<SendIcon />} onClick={onStartDialog}>Start dialog</Button>
                 {isFollowed 
                 ? <Button variant='outlined' disabled={isFollowing} color='error' onClick={unfollowHandler}>Unfollow</Button>
                 : <Button variant='outlined' disabled={isFollowing} color='primary' onClick={followHandler}>Follow</Button>} 
                 </Stack>
                 <hr />
                 </div>}
-           <div className={classes.status}><ProfileStatus authId={props.auth.id}
+           <div><ProfileStatus authId={props.auth.id}
                                                           pageId={userPage.userId}/></div>
         </div>
         </Grid>
         <Grid item xs={8}>
         <div className={classes.info}>
             {!editMode ? <div>
-                {isOwner && <Button variant="outlined" color='primary' onClick={activateEditMode}>Edit info</Button>}
+                {isOwner && <Button variant="outlined" color='primary' startIcon={<EditIcon />}
+                 onClick={activateEditMode}>Edit info</Button>}
                 <Box component="span" 
                 sx={{
                     display: 'block',

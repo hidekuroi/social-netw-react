@@ -1,3 +1,4 @@
+import { Link } from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateStatus } from '../../../redux/profileReducer';
@@ -38,14 +39,13 @@ const ProifleStatus = (props: PropsType) => {
     },[mStatus])
 
 
-
+if(props.authId === props.pageId){
     return (
-     
         <div>
             
               {!editMode &&
               <div>
-                  <span onClick={activateEditMode}>{status || 'There are no status'}</span>
+                  <Link underline='none' sx={{cursor: 'pointer'}} onClick={activateEditMode}>{status || 'There are no status'}</Link>
               </div>
               }
              {editMode &&
@@ -55,7 +55,12 @@ const ProifleStatus = (props: PropsType) => {
              }
             
         </div>
-            
+    )
+    }
+    else return (
+        <div>
+            <span>{status || 'There are no status'}</span>
+        </div>
     )
 }
 

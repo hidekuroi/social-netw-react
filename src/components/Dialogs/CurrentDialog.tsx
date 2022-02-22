@@ -45,8 +45,9 @@ const CurrentDialog = () => {
 
     useEffect(() => {
         if(!isDialogInitialized){
+            console.log('>>>> sadas')
             scrollToBottom();
-            // setDialogInitialized(true);
+            //setDialogInitialized(isDialogInitialized + 1);
         }
     }, [messagesData])
 
