@@ -87,7 +87,6 @@ const Menu = (props: PropsType) => {
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(unreadMessagesCountData)
 
   useEffect(() => {
-    console.log(unreadMessagesCountData)
     setUnreadMessagesCount(unreadMessagesCountData)
   }, [unreadMessagesCountData])
   

@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { Avatar, Stack } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
@@ -112,13 +112,15 @@ const SendMessageForm: React.FC<{}> = ({}) => {
     <div>
             <Stack direction="row" spacing={2}>
             <div>
-            <TextField sx={{marginBottom: '10px', marginTop: '7px'}}
-              placeholder='Enter your message'
-              type="text"
-              autoComplete='off'
-              value={message}
-              onChange={changeMessage}
-            />
+            <Box sx={{width: 500}}>
+              <TextField fullWidth={true} sx={{marginBottom: '10px', marginTop: '7px'}}
+                placeholder='Enter your message'
+                type="text"
+                autoComplete='off'
+                value={message}
+                onChange={changeMessage}
+              />
+            </Box>
             </div>
             <div>
             <IconButton disabled={status !== 'ready'} sx={{marginTop: '13px'}} color="primary" onClick={onSendMessage} aria-label="sendMessage">

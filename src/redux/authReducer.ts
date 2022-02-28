@@ -10,6 +10,7 @@ import { authAPI } from '../api/auth-api';
 import { InferActionsType, RootState } from "./redux-store";
 import { getProfile } from './profileReducer';
 import { UserPageType } from '../types/types';
+import { getUnreadMessagesCount } from './dialogsReducer';
 
 let spot = 'https://wiki-vk.ru/s/001/512/41.png';
 
@@ -139,6 +140,7 @@ export const signIn = (formData: signInData): ThunkType => {
             if(data.resultCode === ResultCodeForCaptcha.Success){
                 dispatch(authCheck());
                 dispatch(actions.setCaptchaUrl(null));
+                dispatch(getUnreadMessagesCount())
             }
             else{
                 if(data.resultCode === ResultCodeForCaptcha.Captcha) {

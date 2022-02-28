@@ -155,14 +155,6 @@ export default function MiniDrawer(props: PropsType) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton component={NavLink} to='/messages' size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -245,11 +237,6 @@ export default function MiniDrawer(props: PropsType) {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show messages" color="inherit">
-              <Badge component={Link} to='/messages' sx={{'&:hover': {color: 'white', backgroundColor: '#1976d2'}}} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"

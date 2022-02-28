@@ -52,7 +52,6 @@ const Dialogs = (props: PropsType) => {
 
     useEffect(() => {
         dispatch(getUnreadMessagesCount())
-        console.log(`NEW MESSAGES: ${props.messengerData.newMessagesCount}`)
     },[props.messengerData.newMessagesCount])
     
 

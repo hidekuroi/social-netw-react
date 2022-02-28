@@ -13,6 +13,7 @@ const CurrentDialog = () => {
     const myId = useSelector((state: RootState) => {return state.auth.signedInUserPage.userId})
     const companionId = useSelector((state: RootState) => {return state.messenger.companionId})
     const spot = 'https://wiki-vk.ru/s/001/512/41.png';
+    const numberOfPages = useSelector((state: RootState) => {return state.messenger.numberOfPages})
 
     const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ const CurrentDialog = () => {
     useEffect(() => {
         dispatch(getMessages(companionId, 1, 20))
         dispatch(getCompanionData(companionId))
-      
+        setCurrentDialogPage(2)      
 
         // amount of api requests per day is limited!!!! :) 
         // badly that messenger api is REST based and not websocket based
@@ -45,10 +46,10 @@ const CurrentDialog = () => {
 
     useEffect(() => {
         if(!isDialogInitialized){
-            console.log('>>>> sadas')
             scrollToBottom();
             //setDialogInitialized(isDialogInitialized + 1);
         }
+        console.log(currentDialogPage)
     }, [messagesData])
 
     const scrollToBottom = () => {
@@ -58,8 +59,10 @@ const CurrentDialog = () => {
     const handleScroll = (e: any) => {
         let element = e.target;
         if(element.scrollTop === 0){
-            dispatch(updateMessages(companionId, currentDialogPage, 20))
-            setCurrentDialogPage(currentDialogPage + 1)
+            if(currentDialogPage <= numberOfPages) {
+                dispatch(updateMessages(companionId, currentDialogPage, 20))
+                setCurrentDialogPage(currentDialogPage + 1)
+            }
         }
     }
 

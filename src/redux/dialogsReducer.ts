@@ -12,6 +12,7 @@ const UNSHIFT_MESSAGES = 'messenger/UNSHIFT-MESSAGES'
 const SET_COMPANION_DATA = 'messenger/SET-COMPANION-DATA'
 const SET_DIALOGS_DATA = 'messenger/SET-DIALOGS-DATA'
 const CHANGE_COMPANION_ID = 'messenger/CHANGE-COMPANION-ID'
+const SET_NUMBER_OF_PAGES = 'messenger/SET-NUMBER-OF-PAGES'
 
 // type MessageType = {
 //     id: number,
@@ -40,6 +41,7 @@ export type DialogsInitialStateType = {
     dialogsData: Array<DialogItemType>,
     newMessagesCount: number,
     companionId: number,
+    numberOfPages: number
 }
 
 let initialState: DialogsInitialStateType = {
@@ -69,7 +71,8 @@ let initialState: DialogsInitialStateType = {
     companionId: 0,
     apiMessagesData: [],
     dialogsData: [],
-    newMessagesCount: 0
+    newMessagesCount: 0,
+    numberOfPages: 0,
 };
 
 
@@ -110,6 +113,11 @@ const dialogsReducer = (state = initialState, action: any): DialogsInitialStateT
             return {...state, apiMessagesData: action.messages}
         }
 
+        case SET_NUMBER_OF_PAGES: {
+            let numberofpages = Math.round(action.numberOfPages / 20)
+            return {...state, numberOfPages: numberofpages}
+        }
+
         case SET_COMPANION_DATA: {
             return {...state, companionData: action.userData}
         }
@@ -145,6 +153,7 @@ export const actions = {
     unshiftMessages: (messages: Array<MessageType>) => ({type: UNSHIFT_MESSAGES, messages} as const),
     setDialogsData: (dialogItems: DialogItemType[]) => ({type: SET_DIALOGS_DATA, dialogItems} as const),
     changeCompanionId: (id: number) => ({type: CHANGE_COMPANION_ID, id} as const),
+    setNumberOfPages: (numberOfPages: number) => ({type: SET_NUMBER_OF_PAGES, numberOfPages} as const),
 
     setCompanionData: (userData: UserPageType) => ({type: SET_COMPANION_DATA, userData} as const),
 } 
@@ -178,6 +187,7 @@ export const getMessages = (userId: number, page = 1, count = 10): ThunkType => 
         let data = await dialogsApi.getMessages(userId, page, count);
             dispatch(actions.setMessages(data.items))
             dispatch(getUnreadMessagesCount())
+            dispatch(actions.setNumberOfPages(data.totalCount))
     }
 }
 

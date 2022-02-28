@@ -4,6 +4,7 @@ import Post from './Post/Post';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { PostType } from '../../../types/types';
 import Button from '@mui/material/Button';
+import { Input } from '../../common/FormControls';
 
 type PropsType = {
   postsData: Array<PostType>,
@@ -17,7 +18,7 @@ const AddPostForm: React.FC<InjectedFormProps<{}, {}, string>> = (props) => {
        return( 
           <form className={classes.addpost} onSubmit={props.handleSubmit}>
             <div>
-                <Field name="addPostField" type="text" component="textarea"/>
+                <Field name="addPostField" multiline rows={3} autoComplete="off" type="text" component={Input}/>
             </div>
             <div>
                 <Button variant="contained" type='submit'>Add post</Button>

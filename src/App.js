@@ -6,7 +6,6 @@ import Settings from './components/Settings/Settings';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import NavbarContainer from './components/Navbar/NavbarContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginContainer from './components/Login/LoginContainer';
 import { compose } from 'redux';

@@ -34,6 +34,7 @@ const ProfileInfo = (props: PropsType) => {
     const smallPhoto = useSelector((state: RootState) => {return state.profile.userPage.photos.small})
     const largePhoto = useSelector((state: RootState) => {return state.profile.userPage.photos.large})
     const isFollowed = useSelector((state: RootState) => {return state.profile.isFollowed})
+    const isAuth = useSelector((state: RootState) => {return state.auth.isAuth})
 
     const [isFollowing, setIsFollowing] = useState(false)
 
@@ -126,7 +127,7 @@ const ProfileInfo = (props: PropsType) => {
                 </div>}
             </div>
             <div className={classes.userName}>{userPage.fullName}</div>
-            {!isOwner && <div>
+            {isAuth && <div>{!isOwner && <div>
                 <Stack direction='row' spacing={1}>
                 <Button variant='contained' startIcon={<SendIcon />} onClick={onStartDialog}>Start dialog</Button>
                 {isFollowed 
@@ -134,7 +135,7 @@ const ProfileInfo = (props: PropsType) => {
                 : <Button variant='outlined' disabled={isFollowing} color='primary' onClick={followHandler}>Follow</Button>} 
                 </Stack>
                 <hr />
-                </div>}
+                </div>}</div>}
            <div><ProfileStatus authId={props.auth.id}
                                                           pageId={userPage.userId}/></div>
         </div>
