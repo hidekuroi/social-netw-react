@@ -1,6 +1,6 @@
 export type PhotosType = {
-    small: string | 'https://wiki-vk.ru/s/001/512/41.png',
-    large: string | 'https://wiki-vk.ru/s/001/512/41.png'
+    small: string | 'https://vk.com/sticker/1-64142-512',
+    large: string | 'https://vk.com/sticker/1-64142-512'
 }
 export type PostType = {
     id: number,

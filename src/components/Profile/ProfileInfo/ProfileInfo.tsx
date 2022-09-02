@@ -19,6 +19,9 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { Avatar, Grid } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { followUser, unfollowUser } from '../../../redux/usersReducer';
+//@ts-ignore
+import Lightbox from "react-awesome-lightbox";
+import "react-awesome-lightbox/build/style.css";
 
 const changeCompanionId = actions2.changeCompanionId;
 
@@ -37,6 +40,8 @@ const ProfileInfo = (props: PropsType) => {
     const isAuth = useSelector((state: RootState) => {return state.auth.isAuth})
 
     const [isFollowing, setIsFollowing] = useState(false)
+    const [isPhotoViewer, setPhotoViewer] = useState(false)
+
 
     if(userPhoto == smallPhoto) size = 100;
     if(userPhoto == largePhoto) size = 240;
@@ -55,14 +60,19 @@ const ProfileInfo = (props: PropsType) => {
         }
     }
 
-    let spot='https://wiki-vk.ru/s/001/512/41.png';
+    let spot='https://vk.com/sticker/1-64142-512';
     
     if(!userPage){
         return <Loading color={'white'}/>
     }
 
-    let onChangePhotoSize = () => {
-        dispatch(actions.changePhotoSize());
+    let openFullscreenViewer = () => {
+        if(userPhoto)setPhotoViewer(true)
+        //dispatch(actions.changePhotoSize());
+    }
+
+    let closePhotoViewer = () => {
+        setPhotoViewer(false)
     }
 
     let onUploadPhoto = (e: any) => {
@@ -114,7 +124,8 @@ const ProfileInfo = (props: PropsType) => {
         <Grid item xs={4}>
         <div>
             <div className={classes.profilePicture}>
-                <Avatar sx={{width: size, height: size}} src={userPhoto ? userPhoto : spot} className={!userPhoto ? classes.small : undefined} onClick={onChangePhotoSize} alt="profpiclarge" />
+            {isPhotoViewer && <Lightbox onClose={closePhotoViewer} image={userPhoto ? userPhoto : spot} title={userPage.fullName + "'s profile picture"} />}
+                <Avatar sx={{width: size, height: size}} src={userPhoto ? userPhoto : spot} className={!userPhoto ? classes.small : undefined} onClick={openFullscreenViewer} alt="profpiclarge" />
                 {isOwner && <div>
                     <label htmlFor="outlined-button-file">
         <Input id="outlined-button-file" type="file" sx={{display: 'none'}} onChange={onUploadPhoto} />

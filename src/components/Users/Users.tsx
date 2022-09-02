@@ -20,7 +20,7 @@ export type UsersPropsType = {
 
 const Users = (props: UsersPropsType) => {  
 
-    let profilePic = 'https://wiki-vk.ru/s/001/512/41.png';
+    let profilePic = 'https://vk.com/sticker/1-64142-512';
 
     const users = useSelector(getUsers)
     const followingProgress = useSelector(getFollowingProgress)

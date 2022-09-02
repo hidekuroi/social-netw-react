@@ -12,7 +12,7 @@ import { getProfile } from './profileReducer';
 import { UserPageType } from '../types/types';
 import { getUnreadMessagesCount } from './dialogsReducer';
 
-let spot = 'https://wiki-vk.ru/s/001/512/41.png';
+let spot = 'https://vk.com/sticker/1-64142-512';
 
 const SET_AUTH_USER = '/auth/SET-AUTH-USER';
 const SET_CAPTCHA_URL = '/auth/SET-CAPTCHA-URL';

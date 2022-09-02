@@ -132,7 +132,7 @@ export const actions = {
     setStatus: (status: string) => ({type: SET_STATUS, status} as const),
     deletePost: (postId: number) => ({type: DELETE_POST, postId} as const),
     setIsFollowed: (isFollowed: boolean) => ({type: SET_IS_FOLLOWED, isFollowed} as const),
-    changePhoto: (photos: {small: string | 'https://wiki-vk.ru/s/001/512/41.png', large: string | 'https://wiki-vk.ru/s/001/512/41.png'}) => ({type: CHANGE_PHOTO, photos} as const)
+    changePhoto: (photos: {small: string | 'https://vk.com/sticker/1-64142-512', large: string | 'https://vk.com/sticker/1-64142-512'}) => ({type: CHANGE_PHOTO, photos} as const)
 } 
 
 

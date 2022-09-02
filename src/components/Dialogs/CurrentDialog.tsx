@@ -12,7 +12,7 @@ const CurrentDialog = () => {
     const myPicture = useSelector((state: RootState) => {return state.auth.signedInUserPage.photos.small})
     const myId = useSelector((state: RootState) => {return state.auth.signedInUserPage.userId})
     const companionId = useSelector((state: RootState) => {return state.messenger.companionId})
-    const spot = 'https://wiki-vk.ru/s/001/512/41.png';
+    const spot = 'https://vk.com/sticker/1-64142-512';
     const numberOfPages = useSelector((state: RootState) => {return state.messenger.numberOfPages})
 
     const dispatch = useDispatch();

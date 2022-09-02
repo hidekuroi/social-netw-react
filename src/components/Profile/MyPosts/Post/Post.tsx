@@ -9,7 +9,7 @@ type PropsType = {
 }
 
 const Post = (inf: PropsType) => {
-  let spot = 'https://wiki-vk.ru/s/001/512/41.png';
+  let spot = 'https://vk.com/sticker/1-64142-512';
     return(
           <div className={classes.item}>
             <Box component="span" 
